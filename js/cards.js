@@ -4,7 +4,7 @@
 const CARDS = {
   stats: {
     vehicleLabel: "Ferrari 296 GTB",
-    thumb: "assets/images/shelby.jpg",
+    thumb: MEDIA.shelby,
     items: [
       { value: "15h", label: "BATTERY LIFE" },
       { value: "300mi", label: "RANGE" },
@@ -17,19 +17,19 @@ const CARDS = {
       id: "adaptive",
       title: "Adaptive Suspension",
       text: "Real time suspension adjustments deliver maximum control, precision, and driving confidence everywhere.",
-      image: "assets/images/boxes-wide.jpg",
+      image: MEDIA.boxesWide,
     },
     {
       id: "digital",
       title: "Digital Performance",
       text: "Integrated driving analytics provide instant feedback for speed, balance, and lap optimization.",
-      image: "assets/images/lavagem-action.jpg",
+      image: MEDIA.lavagemAction,
     },
     {
       id: "lighting",
       title: "Signature Lighting",
       text: "Distinctive LED lighting system creates an unforgettable presence during every night drive.",
-      image: "assets/images/feature-detail.png",
+      image: MEDIA.featureDetail,
     },
   ],
 
@@ -43,12 +43,12 @@ const CARDS = {
     },
     {
       type: "image",
-      image: "assets/images/boxes-wide.jpg",
+      image: MEDIA.boxesWide,
       alt: "Interior automotivo premium",
     },
     {
       type: "image",
-      image: "assets/images/shelby.jpg",
+      image: MEDIA.shelby,
       alt: "Detalhe de ve?culo em destaque",
     },
     {
@@ -65,7 +65,7 @@ const CARDS = {
     },
     {
       type: "image",
-      image: "assets/images/feature-detail.png",
+      image: MEDIA.featureDetail,
       alt: "Detalhe de acabamento",
     },
   ],
@@ -81,7 +81,7 @@ const CARDS = {
   byChapter: {
     hero: { stats: true, dockIndex: 0 },
     "quem-somos": { dockIndex: 1 },
-    destaque: { stats: true, vehicleLabel: "Shelby GT500", thumb: "assets/images/shelby.jpg", dockIndex: 2 },
+    destaque: { stats: true, vehicleLabel: "Shelby GT500", thumb: MEDIA.shelby, dockIndex: 2 },
     "boxes-intro": { showBento: true, bentoRow: 0, dockIndex: 0 },
     ppf: { showBento: true, bentoRow: 0, dockIndex: 0 },
     envelopamento: { showBento: true, bentoRow: 1, dockIndex: 1 },
@@ -89,6 +89,6 @@ const CARDS = {
     lavagem: { showBento: true, bentoRow: 1, dockIndex: 3 },
     estetica: { showBento: true, bentoRow: 2, dockIndex: 4 },
     processo: { featureIndex: 2, dockIndex: 3 },
-    excelencia: { stats: true, vehicleLabel: "L.A CUSTOM", thumb: "assets/images/aston.jpg", dockIndex: 4 },
+    excelencia: { stats: true, vehicleLabel: "L.A CUSTOM", thumb: MEDIA.aston, dockIndex: 4 },
   },
 };

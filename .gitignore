@@ -4,6 +4,14 @@ desktop.ini
 *.log
 .cursor/
 node_modules/
+cloudinary-onboarding.js
+upload-images.js
+upload-videos.js
+cloudinary-images.json
+cloudinary-videos.json
+assets/videos/
+assets/images/
+assets/posters/
 
 # Referência / desenvolvimento (não vai pro site)
 dev_learning_path.pdf
