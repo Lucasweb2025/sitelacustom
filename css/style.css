@@ -254,6 +254,7 @@ video {
   top: 0;
   height: 100vh;
   overflow: hidden;
+  background: #121116;
 }
 
 .scene__video {
@@ -276,26 +277,26 @@ video {
 
 .scene__blend--exit {
   bottom: 0;
-  height: 42vh;
+  height: 36vh;
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(12, 11, 14, 0.25) 28%,
-    rgba(201, 169, 110, 0.14) 58%,
-    rgba(17, 16, 20, 0.92) 82%,
-    var(--bg) 100%
+    rgba(12, 11, 14, 0.12) 35%,
+    rgba(201, 169, 110, 0.1) 62%,
+    rgba(17, 16, 20, 0.45) 88%,
+    rgba(8, 8, 9, 0.72) 100%
   );
 }
 
 .scene__blend--enter {
   top: 0;
-  height: 38vh;
+  height: 32vh;
   background: linear-gradient(
     to bottom,
-    var(--bg) 0%,
-    rgba(17, 16, 20, 0.88) 22%,
-    rgba(201, 169, 110, 0.12) 52%,
-    rgba(12, 11, 14, 0.2) 78%,
+    rgba(8, 8, 9, 0.72) 0%,
+    rgba(17, 16, 20, 0.42) 28%,
+    rgba(201, 169, 110, 0.08) 55%,
+    rgba(12, 11, 14, 0.1) 82%,
     transparent 100%
   );
 }

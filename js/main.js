@@ -10,7 +10,7 @@ const PERF = {
   scrubThrottleMs: 56,
 };
 
-const VIDEO_IDS = ["video-entrada", "video-boxes", "video-lavagem"];
+const VIDEO_IDS = ["video-entrada", "video-boxes", "video-lavagem", "video-detalhamento"];
 
 const lenis = prefersReducedMotion
   ? null
@@ -235,11 +235,11 @@ function createBlendUpdater(section) {
       gsap.set(enterBlend, { opacity: mapRange(progress, 0.02, 0.2, 1, 0) });
     }
     if (exitBlend) {
-      gsap.set(exitBlend, { opacity: mapRange(progress, 0.68, 0.92, 0, 1) });
+      gsap.set(exitBlend, { opacity: mapRange(progress, 0.78, 0.96, 0, 0.55) });
     }
     if (video) {
-      const fadeOut = mapRange(progress, 0.78, 0.98, 1, 0.82);
-      const fadeIn = enterBlend ? mapRange(progress, 0.02, 0.22, 0.82, 1) : 1;
+      const fadeOut = mapRange(progress, 0.84, 0.98, 1, 0.94);
+      const fadeIn = enterBlend ? mapRange(progress, 0.02, 0.18, 0.94, 1) : 1;
       gsap.set(video, { opacity: Math.min(fadeOut, fadeIn) });
     }
   };
@@ -461,15 +461,7 @@ function initChapterScene(sceneKey, sceneConfig) {
           (chapter.videoStart +
             state.videoProgress * (chapter.videoEnd - chapter.videoStart));
 
-        if (state.isHolding || state.videoProgress > 0.02) {
-          const now = performance.now();
-          if (now - lastScrubAt >= PERF.scrubThrottleMs) {
-            lastScrubAt = now;
-            scheduleScrub(targetTime);
-          } else {
-            scheduleScrub(targetTime);
-          }
-        }
+        scheduleScrub(targetTime);
 
         if (state.chapterIndex !== lastChapterIndex) {
           panels.forEach((panel, index) => {
@@ -583,6 +575,7 @@ async function init() {
     await initChapterScene("entrance", SCENES.entrance);
     initChapterScene("boxes", SCENES.boxes);
     initChapterScene("wash", SCENES.wash);
+    initChapterScene("detail", SCENES.detail);
     initCtaReveal();
     ScrollTrigger.refresh();
   } catch (error) {

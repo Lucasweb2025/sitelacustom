@@ -1,5 +1,5 @@
 /**
- * CAPÍTULOS DO SCROLL — 6 paradas (desktop otimizado)
+ * CAPÍTULOS DO SCROLL — 7 paradas (desktop otimizado)
  *
  * videoStart / videoEnd = trecho do vídeo (0 a 1)
  * weight = quanto scroll essa aba ocupa
@@ -14,7 +14,7 @@ const SCENES = {
       {
         id: "hero",
         videoStart: 0,
-        videoEnd: 0.32,
+        videoEnd: 0.38,
         weight: 1,
         eyebrow: "Customização premium",
         title: ["L.A", "CUSTOM"],
@@ -23,8 +23,8 @@ const SCENES = {
       },
       {
         id: "destaque",
-        videoStart: 0.42,
-        videoEnd: 1,
+        videoStart: 0.38,
+        videoEnd: 0.94,
         weight: 1,
         eyebrow: "Projeto em destaque",
         title: ["SHELBY", "GT500"],
@@ -43,7 +43,7 @@ const SCENES = {
       {
         id: "boxes-intro",
         videoStart: 0,
-        videoEnd: 0.22,
+        videoEnd: 0.28,
         weight: 1,
         eyebrow: "Nossa estrutura",
         title: ["BOXES", "PREMIUM"],
@@ -52,8 +52,8 @@ const SCENES = {
       },
       {
         id: "ppf",
-        videoStart: 0.22,
-        videoEnd: 0.48,
+        videoStart: 0.28,
+        videoEnd: 0.58,
         weight: 1,
         eyebrow: "Serviço 01",
         title: ["PPF", "PROTEÇÃO"],
@@ -62,8 +62,8 @@ const SCENES = {
       },
       {
         id: "envelopamento",
-        videoStart: 0.48,
-        videoEnd: 0.78,
+        videoStart: 0.58,
+        videoEnd: 1,
         weight: 1,
         eyebrow: "Serviço 02",
         title: ["ENVELOPA", "MENTO"],
@@ -88,6 +88,25 @@ const SCENES = {
         title: ["PRECISÃO", "EM CADA", "DETALHE"],
         titleAccent: 1,
         text: "Equipe especializada, iluminação profissional e excelência em cada entrega.",
+      },
+    ],
+  },
+
+  detail: {
+    videoId: "video-detalhamento",
+    selector: ".scene--detail",
+    scrollEnd: "+=110%",
+    movePhase: 0.55,
+    chapters: [
+      {
+        id: "detalhamento",
+        videoStart: 0,
+        videoEnd: 1,
+        weight: 1,
+        eyebrow: "Serviço 03",
+        title: ["CORREÇÃO", "DE PINTURA"],
+        titleAccent: 0,
+        text: "Polimento técnico e vitrificação para acabamento espelhado e proteção duradoura.",
       },
     ],
   },

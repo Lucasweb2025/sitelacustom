@@ -69,5 +69,11 @@ const CARDS = {
     ppf: { showBento: true, bentoRow: 0, dockIndex: 0 },
     envelopamento: { showBento: true, bentoRow: 1, dockIndex: 1 },
     processo: { stats: true, vehicleLabel: "L.A CUSTOM", thumb: MEDIA.aston, dockIndex: 4 },
+    detalhamento: {
+      stats: true,
+      vehicleLabel: "Correç?o de pintura",
+      thumb: MEDIA.featureDetail,
+      dockIndex: 3,
+    },
   },
 };
