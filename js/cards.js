@@ -79,9 +79,15 @@ const CARDS = {
   ],
 
   byChapter: {
-    hero: { stats: true, dockIndex: 0 },
+    hero: { dockIndex: 0 },
     "quem-somos": { dockIndex: 1 },
-    destaque: { stats: true, vehicleLabel: "Shelby GT500", thumb: MEDIA.shelby, dockIndex: 2 },
+    destaque: {
+      stats: true,
+      statsProminent: true,
+      vehicleLabel: "Shelby GT500",
+      thumb: MEDIA.shelby,
+      dockIndex: 2,
+    },
     "boxes-intro": { showBento: true, bentoRow: 0, dockIndex: 0 },
     ppf: { showBento: true, bentoRow: 0, dockIndex: 0 },
     envelopamento: { showBento: true, bentoRow: 1, dockIndex: 1 },

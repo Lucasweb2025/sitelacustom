@@ -84,6 +84,58 @@
   filter: saturate(1.35) sepia(0.08) hue-rotate(-6deg) brightness(1);
 }
 
+/* Shelby stats ? grande, na frente do fot?grafo (se??o entrada) */
+.scene--entrance .glass-stats--prominent {
+  right: clamp(1.25rem, 6vw, 5rem);
+  bottom: auto;
+  top: 36%;
+  width: min(38rem, 62vw);
+  z-index: 6;
+}
+
+.scene--entrance .glass-stats--prominent .glass-stats__label {
+  margin-bottom: 1rem;
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+}
+
+.scene--entrance .glass-stats--prominent .glass-stats__mark {
+  width: 2.1rem;
+  height: 2.1rem;
+  font-size: 0.95rem;
+}
+
+.scene--entrance .glass-stats--prominent .glass-stats__grid {
+  gap: 0.8rem;
+}
+
+.scene--entrance .glass-stats--prominent .glass-stat {
+  padding: clamp(1rem, 2.5vw, 1.45rem) clamp(1.1rem, 2.5vw, 1.6rem);
+  border-radius: 1rem;
+  background: rgba(12, 12, 14, 0.62);
+  backdrop-filter: blur(20px);
+}
+
+.scene--entrance .glass-stats--prominent .glass-stat--thumb {
+  min-height: clamp(7.5rem, 18vh, 11rem);
+}
+
+.scene--entrance .glass-stats--prominent .glass-stat--thumb img {
+  min-height: clamp(7.5rem, 18vh, 11rem);
+}
+
+.scene--entrance .glass-stats--prominent .glass-stat__value {
+  font-size: clamp(2rem, 5.5vw, 3.25rem);
+}
+
+.scene--entrance .glass-stats--prominent .glass-stat__label {
+  margin-top: 0.5rem;
+  font-size: clamp(0.68rem, 1.2vw, 0.78rem);
+}
+
+.scene--entrance .chapter-panel {
+  max-width: min(28rem, 42vw);
+}
+
 @media (max-width: 767px) {
   .scene--boxes .chapter-panel {
     bottom: auto;
@@ -106,5 +158,28 @@
 
   .bento-cell--image img {
     min-height: 5.25rem;
+  }
+
+  .scene--entrance .glass-stats--prominent {
+    left: 1rem;
+    right: 1rem;
+    top: auto;
+    bottom: 1.25rem;
+    width: auto;
+    transform: none;
+  }
+
+  .scene--entrance .glass-stats--prominent .glass-stat--thumb,
+  .scene--entrance .glass-stats--prominent .glass-stat--thumb img {
+    min-height: 6.5rem;
+  }
+
+  .scene--entrance .glass-stats--prominent .glass-stat__value {
+    font-size: clamp(1.6rem, 8vw, 2.2rem);
+  }
+
+  .scene--entrance .chapter-panel {
+    max-width: none;
+    bottom: 14rem;
   }
 }

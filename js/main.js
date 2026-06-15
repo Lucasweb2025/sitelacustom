@@ -356,11 +356,15 @@ function updateSceneCards(section, chapterId, reveal) {
   }
 
   if (stats) {
+    const prominent = Boolean(config.statsProminent);
+    const centerY = prominent && !isMobile;
     stats.classList.toggle("is-visible", showStats && cardReveal > 0.1);
+    stats.classList.toggle("glass-stats--prominent", prominent && showStats);
     gsap.set(stats, {
       opacity: showStats ? cardReveal : 0,
-      y: showStats ? mapRange(cardReveal, 0, 1, 28, 0) : 28,
-      scale: showStats ? mapRange(cardReveal, 0, 1, 0.96, 1) : 0.96,
+      yPercent: centerY ? -50 : 0,
+      y: showStats ? mapRange(cardReveal, 0, 1, prominent ? 80 : 28, 0) : prominent ? 80 : 28,
+      scale: showStats ? mapRange(cardReveal, 0, 1, prominent ? 0.9 : 0.96, 1) : prominent ? 0.9 : 0.96,
     });
   }
 
