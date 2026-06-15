@@ -1,0 +1,12 @@
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+.cursor/
+node_modules/
+
+# Referência / desenvolvimento (não vai pro site)
+dev_learning_path.pdf
+exemplo*
+IMG_*.MOV
+frames/

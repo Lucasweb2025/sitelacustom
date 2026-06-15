@@ -1,0 +1,110 @@
+/* Bento grid ? refer?ncia zig-zag (sobe de baixo para cima) */
+.bento-grid {
+  position: absolute;
+  right: clamp(1rem, 4vw, 3rem);
+  top: 50%;
+  width: min(30rem, 54vw);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, minmax(6.5rem, 1fr));
+  gap: 0;
+  opacity: 0;
+  pointer-events: none;
+  border-radius: 0.35rem;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+  z-index: 5;
+}
+
+.bento-cell {
+  position: relative;
+  min-height: 6.5rem;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.bento-cell--text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(0.85rem, 2vw, 1.35rem);
+}
+
+.bento-cell--warm {
+  background: rgba(168, 52, 72, 0.82);
+  color: #fff;
+}
+
+.bento-cell--light {
+  background: rgba(248, 246, 244, 0.94);
+  color: #141316;
+}
+
+.bento-cell--dark {
+  background: rgba(14, 13, 16, 0.88);
+  color: #fff;
+}
+
+.bento-cell__title {
+  margin: 0 0 0.45rem;
+  font-size: clamp(0.82rem, 1.6vw, 1rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+.bento-cell__text {
+  margin: 0;
+  font-size: clamp(0.62rem, 1.1vw, 0.72rem);
+  line-height: 1.5;
+  opacity: 0.88;
+}
+
+.bento-cell--light .bento-cell__text {
+  color: rgba(20, 19, 22, 0.72);
+}
+
+.bento-cell--image img {
+  width: 100%;
+  height: 100%;
+  min-height: 6.5rem;
+  object-fit: cover;
+  filter: saturate(1.25) sepia(0.12) hue-rotate(-8deg) brightness(0.92);
+}
+
+.bento-cell.is-active {
+  z-index: 1;
+}
+
+.bento-cell.is-active.bento-cell--text {
+  box-shadow: inset 0 0 0 1px rgba(201, 169, 110, 0.45);
+}
+
+.bento-cell.is-active.bento-cell--image img {
+  filter: saturate(1.35) sepia(0.08) hue-rotate(-6deg) brightness(1);
+}
+
+@media (max-width: 767px) {
+  .scene--boxes .chapter-panel {
+    bottom: auto;
+    top: calc(var(--header-h) + 4.5rem);
+    max-width: min(18rem, calc(100% - 2rem));
+  }
+
+  .bento-grid {
+    right: 1rem;
+    left: 1rem;
+    width: auto;
+    top: auto;
+    bottom: 1.25rem;
+    grid-template-rows: repeat(3, minmax(5.25rem, auto));
+  }
+
+  .bento-cell {
+    min-height: 5.25rem;
+  }
+
+  .bento-cell--image img {
+    min-height: 5.25rem;
+  }
+}

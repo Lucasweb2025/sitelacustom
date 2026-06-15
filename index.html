@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="L.A Custom ù Customizaùùo premium automotiva. PPF, envelopamento, film, lavagem detalhada e estùtica automotiva."
+    />
+    <title>L.A Custom ù Customizaùùo Premium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/bento.css" />
+  </head>
+  <body>
+    <header class="header">
+      <a href="#inicio" class="header__logo" aria-label="L.A Custom inùcio">
+        <span class="header__logo-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M2 14.5C6 9.5 11 7 16 7s10 2.5 14 7.5"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+            <path
+              d="M6 14h20"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+            <circle cx="9" cy="14.5" r="2" stroke="currentColor" stroke-width="1.2" />
+            <circle cx="23" cy="14.5" r="2" stroke="currentColor" stroke-width="1.2" />
+            <path
+              d="M10 7l2-3h8l2 3"
+              stroke="currentColor"
+              stroke-width="1.3"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+      </a>
+
+      <nav class="header__nav" aria-label="Navegaùùo principal">
+        <a href="#servicos" class="header__nav-link">Performance</a>
+        <a href="#servicos" class="header__nav-link">Technology</a>
+        <a href="#sobre" class="header__nav-link">Interior</a>
+        <a href="#contato" class="header__nav-link">Experience</a>
+      </nav>
+
+      <button
+        class="header__menu"
+        type="button"
+        aria-label="Abrir menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <nav class="mobile-menu__nav" aria-label="Menu mobile">
+        <a href="#inicio" class="mobile-menu__link">Inicio</a>
+        <a href="#servicos" class="mobile-menu__link">Performance</a>
+        <a href="#servicos" class="mobile-menu__link">Technology</a>
+        <a href="#sobre" class="mobile-menu__link">Interior</a>
+        <a href="#contato" class="mobile-menu__link">Experience</a>
+        <a
+          class="mobile-menu__cta btn btn--primary"
+          href="https://wa.me/5500000000000"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Orcamento WhatsApp</a
+        >
+      </nav>
+    </div>
+
+    <main>
+      <section class="scene scene--entrance" id="inicio" aria-label="Entrada L.A Custom">
+        <div class="scene__sticky">
+          <video
+            class="scene__video"
+            id="video-entrada"
+            muted
+            playsinline
+            preload="metadata"
+            poster="assets/images/fachada.jpg"
+            data-src-desktop="assets/videos/entrada.mp4"
+            data-src-mobile="assets/videos/entrada-mobile.mp4"
+          ></video>
+          <div class="scene__overlay scene__overlay--dark"></div>
+
+          <div class="scene__hint">
+            <span>Role para entrar</span>
+            <span class="scene__hint-arrow" aria-hidden="true">&#8595;</span>
+          </div>
+
+          <div class="scene__blend scene__blend--exit" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <section class="scene scene--boxes" id="servicos" aria-label="Nossos boxes e serviùos">
+        <div class="scene__sticky">
+          <div class="scene__blend scene__blend--enter" aria-hidden="true"></div>
+          <video
+            class="scene__video"
+            id="video-boxes"
+            muted
+            playsinline
+            preload="none"
+            poster="assets/images/boxes-wide.jpg"
+            data-lazy
+            data-src-desktop="assets/videos/boxes.mp4"
+            data-src-mobile="assets/videos/boxes-mobile.mp4"
+          ></video>
+          <div class="scene__overlay scene__overlay--gradient"></div>
+          <div class="scene__blend scene__blend--exit" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <section class="scene scene--wash" id="sobre" aria-label="Nosso trabalho em aùùo">
+        <div class="scene__sticky">
+          <div class="scene__blend scene__blend--enter" aria-hidden="true"></div>
+          <video
+            class="scene__video"
+            id="video-lavagem"
+            muted
+            playsinline
+            preload="none"
+            poster="assets/images/lavagem.jpg"
+            data-lazy
+            data-src-desktop="assets/videos/lavagem.mp4"
+            data-src-mobile="assets/videos/lavagem-mobile.mp4"
+          ></video>
+          <div class="scene__overlay scene__overlay--dark"></div>
+          <div class="scene__blend scene__blend--exit" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <section class="cta-section" id="contato">
+        <div class="cta-section__inner">
+          <p class="eyebrow eyebrow--light">Pronto para transformar seu veùculo?</p>
+          <h2 class="cta-section__title">Agende seu orùamento</h2>
+          <p class="cta-section__text">
+            Av. ù nù 398 ù Atendimento premium para veùculos de alto padrùo.
+          </p>
+          <div class="cta-section__actions">
+            <a
+              class="btn btn--primary"
+              href="https://wa.me/5500000000000"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Falar no WhatsApp</a
+            >
+            <a class="btn btn--ghost" href="#inicio">Voltar ao topo</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__brand">
+        <span class="header__logo-mark">A</span>
+        <span>L.A CUSTOM</span>
+      </div>
+      <p class="footer__copy">ù 2026 L.A Custom. Todos os direitos reservados.</p>
+      <div class="footer__links">
+        <a href="#">Instagram</a>
+        <a href="#contato">Contato</a>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+    <script src="js/chapters.js"></script>
+    <script src="js/cards.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
