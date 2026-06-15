@@ -14,7 +14,7 @@ const SCENES = {
       {
         id: "hero",
         videoStart: 0,
-        videoEnd: 0.35,
+        videoEnd: 0.32,
         weight: 1,
         eyebrow: "Customização premium",
         title: ["L.A", "CUSTOM"],
@@ -23,7 +23,7 @@ const SCENES = {
       },
       {
         id: "destaque",
-        videoStart: 0.55,
+        videoStart: 0.42,
         videoEnd: 1,
         weight: 1,
         eyebrow: "Projeto em destaque",
@@ -43,7 +43,7 @@ const SCENES = {
       {
         id: "boxes-intro",
         videoStart: 0,
-        videoEnd: 0.16,
+        videoEnd: 0.22,
         weight: 1,
         eyebrow: "Nossa estrutura",
         title: ["BOXES", "PREMIUM"],
@@ -52,8 +52,8 @@ const SCENES = {
       },
       {
         id: "ppf",
-        videoStart: 0.16,
-        videoEnd: 0.38,
+        videoStart: 0.22,
+        videoEnd: 0.48,
         weight: 1,
         eyebrow: "Serviço 01",
         title: ["PPF", "PROTEÇÃO"],
@@ -62,8 +62,8 @@ const SCENES = {
       },
       {
         id: "envelopamento",
-        videoStart: 0.38,
-        videoEnd: 0.65,
+        videoStart: 0.48,
+        videoEnd: 0.78,
         weight: 1,
         eyebrow: "Serviço 02",
         title: ["ENVELOPA", "MENTO"],

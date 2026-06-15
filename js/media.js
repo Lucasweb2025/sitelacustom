@@ -10,8 +10,8 @@ const MEDIA = {
   featureDetail: `${CLOUD}/image/upload/f_auto,q_auto,w_1000/la-custom/site/feature-detail`,
   aston: `${CLOUD}/image/upload/f_auto,q_auto,w_800/la-custom/site/aston`,
   videos: {
-    entrada: `${CLOUD}/video/upload/la-custom/site/entrada.mp4`,
-    boxes: `${CLOUD}/video/upload/la-custom/site/boxes.mp4`,
+    entrada: `${CLOUD}/video/upload/la-custom/site/entrada.mp4?v=9717`,
+    boxes: `${CLOUD}/video/upload/la-custom/site/boxes.mp4?v=2985`,
     lavagem: `${CLOUD}/video/upload/la-custom/site/lavagem.mp4`,
   },
 };
