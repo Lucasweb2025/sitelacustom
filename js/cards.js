@@ -12,28 +12,6 @@ const CARDS = {
     ],
   },
 
-  features: [
-    {
-      id: "adaptive",
-      title: "Adaptive Suspension",
-      text: "Real time suspension adjustments deliver maximum control, precision, and driving confidence everywhere.",
-      image: MEDIA.boxesWide,
-    },
-    {
-      id: "digital",
-      title: "Digital Performance",
-      text: "Integrated driving analytics provide instant feedback for speed, balance, and lap optimization.",
-      image: MEDIA.lavagemAction,
-    },
-    {
-      id: "lighting",
-      title: "Signature Lighting",
-      text: "Distinctive LED lighting system creates an unforgettable presence during every night drive.",
-      image: MEDIA.featureDetail,
-    },
-  ],
-
-  /** Grade zig-zag refer?ncia ? texto e imagem alternados (6 c?lulas) */
   bentoGrid: [
     {
       type: "text",
@@ -49,7 +27,7 @@ const CARDS = {
     {
       type: "image",
       image: MEDIA.shelby,
-      alt: "Detalhe de ve?culo em destaque",
+      alt: "Detalhe de veículo em destaque",
     },
     {
       type: "text",
@@ -80,7 +58,6 @@ const CARDS = {
 
   byChapter: {
     hero: { dockIndex: 0 },
-    "quem-somos": { dockIndex: 1 },
     destaque: {
       stats: true,
       statsProminent: true,
@@ -91,10 +68,6 @@ const CARDS = {
     "boxes-intro": { showBento: true, bentoRow: 0, dockIndex: 0 },
     ppf: { showBento: true, bentoRow: 0, dockIndex: 0 },
     envelopamento: { showBento: true, bentoRow: 1, dockIndex: 1 },
-    film: { showBento: true, bentoRow: 2, dockIndex: 2 },
-    lavagem: { showBento: true, bentoRow: 1, dockIndex: 3 },
-    estetica: { showBento: true, bentoRow: 2, dockIndex: 4 },
-    processo: { featureIndex: 2, dockIndex: 3 },
-    excelencia: { stats: true, vehicleLabel: "L.A CUSTOM", thumb: MEDIA.aston, dockIndex: 4 },
+    processo: { stats: true, vehicleLabel: "L.A CUSTOM", thumb: MEDIA.aston, dockIndex: 4 },
   },
 };

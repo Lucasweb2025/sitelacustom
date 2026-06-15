@@ -229,9 +229,9 @@ video {
 /* Scenes */
 .scene {
   position: relative;
-  height: 250vh;
+  height: 200vh;
   content-visibility: auto;
-  contain-intrinsic-size: auto 250vh;
+  contain-intrinsic-size: auto 200vh;
 }
 
 .scene--entrance {
@@ -246,7 +246,7 @@ video {
 .scene--wash {
   z-index: 1;
   margin-top: -18vh;
-  height: 180vh;
+  height: 140vh;
 }
 
 .scene__sticky {

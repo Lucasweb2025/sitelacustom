@@ -5,10 +5,12 @@ const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)
 const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
 
 const PERF = {
-  scrubSmooth: prefersReducedMotion ? false : 0.5,
-  scrubMinDelta: 0.04,
-  scrubThrottleMs: 48,
+  scrubSmooth: prefersReducedMotion ? false : 0.45,
+  scrubMinDelta: 0.06,
+  scrubThrottleMs: 56,
 };
+
+const VIDEO_IDS = ["video-entrada", "video-boxes", "video-lavagem"];
 
 const lenis = prefersReducedMotion
   ? null
@@ -28,6 +30,31 @@ if (lenis) {
 
 function getVideoSrc(video) {
   return video.dataset.srcDesktop || video.getAttribute("src");
+}
+
+function releaseVideo(video) {
+  if (!video || video.dataset.ready !== "true") return;
+  video.pause();
+  video.removeAttribute("src");
+  video.load();
+  delete video.dataset.ready;
+}
+
+function releaseOtherVideos(activeVideo) {
+  VIDEO_IDS.forEach((id) => {
+    const candidate = document.getElementById(id);
+    if (candidate && candidate !== activeVideo) {
+      releaseVideo(candidate);
+    }
+  });
+}
+
+async function activateVideo(video) {
+  if (!video) return 1;
+  releaseOtherVideos(video);
+  await ensureVideoLoaded(video);
+  video.pause();
+  return video.duration || 1;
 }
 
 function ensureVideoLoaded(video) {
@@ -322,7 +349,7 @@ function updateBentoGrid(root, show, reveal, activeRow) {
   });
 }
 
-function updateSceneCards(section, chapterId, reveal) {
+function updateSceneCards(section, chapterId, reveal, isHolding) {
   const root = section.querySelector(".scene-cards");
   if (!root) return;
 
@@ -334,7 +361,7 @@ function updateSceneCards(section, chapterId, reveal) {
 
   const showStats = Boolean(config.stats) && !config.showBento;
   const showBento = Boolean(config.showBento);
-  const cardReveal = mapRange(reveal, 0.45, 1, 0, 1);
+  const cardReveal = isHolding ? mapRange(reveal, 0.35, 1, 0, 1) : 0;
 
   if (statsName && config.vehicleLabel) {
     statsName.textContent = config.vehicleLabel;
@@ -383,10 +410,11 @@ function initChapterScene(sceneKey, sceneConfig) {
   let pendingTime = null;
   let rafId = null;
   let lastChapterIndex = -1;
+  let sceneActive = false;
 
   const applyScrubTime = () => {
     rafId = null;
-    if (pendingTime === null) return;
+    if (pendingTime === null || !sceneActive) return;
     if (Math.abs(video.currentTime - pendingTime) > PERF.scrubMinDelta) {
       video.currentTime = pendingTime;
     }
@@ -399,22 +427,26 @@ function initChapterScene(sceneKey, sceneConfig) {
     rafId = requestAnimationFrame(applyScrubTime);
   };
 
-  return ensureVideoLoaded(video).then(() => {
-    duration = video.duration || 1;
-    video.pause();
-    video.currentTime = 0;
+  video.pause();
+  if (panels[0]) animatePanelLetters(panels[0], 0);
 
-    if (panels[0]) animatePanelLetters(panels[0], 0);
-
-    return ScrollTrigger.create({
+  return Promise.resolve(
+    ScrollTrigger.create({
       trigger: section,
       start: "top top",
       end: scrollEnd,
       pin: true,
       scrub: prefersReducedMotion ? false : PERF.scrubSmooth,
       anticipatePin: 1,
-      onEnter: () => ensureVideoLoaded(video),
+      onEnter: () => {
+        sceneActive = true;
+        activateVideo(video).then((value) => {
+          duration = value;
+        });
+      },
       onUpdate: (self) => {
+        if (!sceneActive || duration <= 0) return;
+
         const progress = self.progress;
         updateBlends(progress);
 
@@ -429,12 +461,14 @@ function initChapterScene(sceneKey, sceneConfig) {
           (chapter.videoStart +
             state.videoProgress * (chapter.videoEnd - chapter.videoStart));
 
-        const now = performance.now();
-        if (now - lastScrubAt >= PERF.scrubThrottleMs) {
-          lastScrubAt = now;
-          scheduleScrub(targetTime);
-        } else {
-          scheduleScrub(targetTime);
+        if (state.isHolding || state.videoProgress > 0.02) {
+          const now = performance.now();
+          if (now - lastScrubAt >= PERF.scrubThrottleMs) {
+            lastScrubAt = now;
+            scheduleScrub(targetTime);
+          } else {
+            scheduleScrub(targetTime);
+          }
         }
 
         if (state.chapterIndex !== lastChapterIndex) {
@@ -447,12 +481,26 @@ function initChapterScene(sceneKey, sceneConfig) {
         }
 
         animatePanelLetters(panels[state.chapterIndex], state.panelReveal);
-        updateSceneCards(section, chapter.id, state.panelReveal);
+        updateSceneCards(section, chapter.id, state.panelReveal, state.isHolding);
       },
-      onLeave: () => video.pause(),
-      onEnterBack: () => ensureVideoLoaded(video),
-    });
-  });
+      onLeave: () => {
+        sceneActive = false;
+        video.pause();
+        releaseVideo(video);
+      },
+      onEnterBack: () => {
+        sceneActive = true;
+        activateVideo(video).then((value) => {
+          duration = value;
+        });
+      },
+      onLeaveBack: () => {
+        sceneActive = false;
+        video.pause();
+        releaseVideo(video);
+      },
+    })
+  );
 }
 
 function initHeaderMenu() {
@@ -520,7 +568,6 @@ async function init() {
   try {
     initHeaderMenu();
     observeLazyVideos();
-    await ensureVideoLoaded(document.getElementById("video-entrada"));
 
     const hint = document.querySelector(".scene__hint");
     if (hint) {
@@ -534,10 +581,8 @@ async function init() {
     }
 
     await initChapterScene("entrance", SCENES.entrance);
-    await Promise.all([
-      initChapterScene("boxes", SCENES.boxes),
-      initChapterScene("wash", SCENES.wash),
-    ]);
+    initChapterScene("boxes", SCENES.boxes);
+    initChapterScene("wash", SCENES.wash);
     initCtaReveal();
     ScrollTrigger.refresh();
   } catch (error) {
