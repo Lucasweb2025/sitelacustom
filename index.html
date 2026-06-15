@@ -16,8 +16,19 @@
     />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/bento.css" />
+    <link rel="stylesheet" href="css/desktop-only.css" />
   </head>
   <body>
+    <div class="desktop-gate" role="dialog" aria-modal="true" aria-labelledby="desktop-gate-title">
+      <div>
+        <h1 class="desktop-gate__title" id="desktop-gate-title">L.A Custom</h1>
+        <p class="desktop-gate__text">
+          Esta experiùncia foi criada para desktop. Abra em um computador para ver o site completo.
+        </p>
+      </div>
+    </div>
+
+    <div class="site-root">
     <header class="header">
       <a href="#inicio" class="header__logo" aria-label="L.A Custom inùcio">
         <span class="header__logo-icon" aria-hidden="true">
@@ -93,7 +104,6 @@
             preload="metadata"
             poster="https://res.cloudinary.com/dcc2fweye/image/upload/f_auto,q_auto,w_960/la-custom/site/fachada"
             data-src-desktop="https://res.cloudinary.com/dcc2fweye/video/upload/la-custom/site/entrada.mp4"
-            data-src-mobile="https://res.cloudinary.com/dcc2fweye/video/upload/la-custom/site/entrada-mobile.mp4"
           ></video>
           <div class="scene__overlay scene__overlay--dark"></div>
 
@@ -118,7 +128,6 @@
             poster="https://res.cloudinary.com/dcc2fweye/image/upload/f_auto,q_auto,w_960/la-custom/site/boxes-wide"
             data-lazy
             data-src-desktop="https://res.cloudinary.com/dcc2fweye/video/upload/la-custom/site/boxes.mp4"
-            data-src-mobile="https://res.cloudinary.com/dcc2fweye/video/upload/la-custom/site/boxes-mobile.mp4"
           ></video>
           <div class="scene__overlay scene__overlay--gradient"></div>
           <div class="scene__blend scene__blend--exit" aria-hidden="true"></div>
@@ -137,7 +146,6 @@
             poster="https://res.cloudinary.com/dcc2fweye/image/upload/f_auto,q_auto,w_960/la-custom/site/lavagem"
             data-lazy
             data-src-desktop="https://res.cloudinary.com/dcc2fweye/video/upload/la-custom/site/lavagem.mp4"
-            data-src-mobile="https://res.cloudinary.com/dcc2fweye/video/upload/la-custom/site/lavagem-mobile.mp4"
           ></video>
           <div class="scene__overlay scene__overlay--dark"></div>
           <div class="scene__blend scene__blend--exit" aria-hidden="true"></div>
@@ -176,6 +184,7 @@
         <a href="#contato">Contato</a>
       </div>
     </footer>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>

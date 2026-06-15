@@ -17,15 +17,9 @@ const MEDIA = {
   videos: {
     entrada:
       "https://res.cloudinary.com/dcc2fweye/video/upload/la-custom/site/entrada.mp4",
-    entradaMobile:
-      "https://res.cloudinary.com/dcc2fweye/video/upload/la-custom/site/entrada-mobile.mp4",
     boxes:
       "https://res.cloudinary.com/dcc2fweye/video/upload/la-custom/site/boxes.mp4",
-    boxesMobile:
-      "https://res.cloudinary.com/dcc2fweye/video/upload/la-custom/site/boxes-mobile.mp4",
     lavagem:
       "https://res.cloudinary.com/dcc2fweye/video/upload/la-custom/site/lavagem.mp4",
-    lavagemMobile:
-      "https://res.cloudinary.com/dcc2fweye/video/upload/la-custom/site/lavagem-mobile.mp4",
   },
 };

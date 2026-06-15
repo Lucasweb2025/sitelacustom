@@ -2,27 +2,21 @@ gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.config({ limitCallbacks: true });
 
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const isMobile = window.matchMedia("(max-width: 767px)").matches;
-const isLiteMode = prefersReducedMotion || isMobile;
+const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
 
 const PERF = {
-  scrubSmooth: isLiteMode ? 1.2 : 0.6,
-  scrubMinDelta: isLiteMode ? 0.12 : 0.05,
-  scrubThrottleMs: isLiteMode ? 140 : 60,
+  scrubSmooth: prefersReducedMotion ? false : 0.5,
+  scrubMinDelta: 0.04,
+  scrubThrottleMs: 48,
 };
 
-if (isLiteMode) {
-  document.documentElement.classList.add("lite-mode");
-}
-
-const lenis =
-  isLiteMode || prefersReducedMotion
-    ? null
-    : new Lenis({
-        duration: 1.05,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true,
-      });
+const lenis = prefersReducedMotion
+  ? null
+  : new Lenis({
+      duration: 1.05,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
 
 if (lenis) {
   lenis.on("scroll", ScrollTrigger.update);
@@ -33,9 +27,7 @@ if (lenis) {
 }
 
 function getVideoSrc(video) {
-  const mobile = video.dataset.srcMobile;
-  const desktop = video.dataset.srcDesktop;
-  return isMobile && mobile ? mobile : desktop;
+  return video.dataset.srcDesktop || video.getAttribute("src");
 }
 
 function ensureVideoLoaded(video) {
@@ -218,7 +210,7 @@ function createBlendUpdater(section) {
     if (exitBlend) {
       gsap.set(exitBlend, { opacity: mapRange(progress, 0.68, 0.92, 0, 1) });
     }
-    if (video && !isLiteMode) {
+    if (video) {
       const fadeOut = mapRange(progress, 0.78, 0.98, 1, 0.82);
       const fadeIn = enterBlend ? mapRange(progress, 0.02, 0.22, 0.82, 1) : 1;
       gsap.set(video, { opacity: Math.min(fadeOut, fadeIn) });
@@ -296,7 +288,7 @@ function updateBentoGrid(root, show, reveal, activeRow) {
   const cells = [...grid.querySelectorAll(".bento-cell")];
   const gridReveal = show ? mapRange(reveal, 0.25, 1, 0, 1) : 0;
 
-  const yPercent = isMobile ? 0 : -50;
+  const yPercent = -50;
 
   if (!show || gridReveal <= 0.02) {
     grid.classList.remove("is-visible");
@@ -357,7 +349,7 @@ function updateSceneCards(section, chapterId, reveal) {
 
   if (stats) {
     const prominent = Boolean(config.statsProminent);
-    const centerY = prominent && !isMobile;
+    const centerY = Boolean(config.statsProminent);
     stats.classList.toggle("is-visible", showStats && cardReveal > 0.1);
     stats.classList.toggle("glass-stats--prominent", prominent && showStats);
     gsap.set(stats, {
@@ -384,7 +376,7 @@ function initChapterScene(sceneKey, sceneConfig) {
   renderSceneCards(section, sceneKey);
   const panels = renderChapterPanels(sceneKey, sceneConfig);
   const updateBlends = createBlendUpdater(section);
-  const scrollEnd = isMobile ? sceneConfig.scrollEnd.mobile : sceneConfig.scrollEnd.desktop;
+  const scrollEnd = sceneConfig.scrollEnd;
 
   let duration = 1;
   let lastScrubAt = 0;
@@ -523,6 +515,8 @@ function initCtaReveal() {
 }
 
 async function init() {
+  if (!isDesktop) return;
+
   try {
     initHeaderMenu();
     observeLazyVideos();

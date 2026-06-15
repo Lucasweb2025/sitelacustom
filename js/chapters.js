@@ -10,7 +10,7 @@ const SCENES = {
   entrance: {
     videoId: "video-entrada",
     selector: ".scene--entrance",
-    scrollEnd: { desktop: "+=240%", mobile: "+=180%" },
+    scrollEnd: "+=240%",
     movePhase: 0.58,
     chapters: [
       {
@@ -49,7 +49,7 @@ const SCENES = {
   boxes: {
     videoId: "video-boxes",
     selector: ".scene--boxes",
-    scrollEnd: { desktop: "+=320%", mobile: "+=240%" },
+    scrollEnd: "+=320%",
     movePhase: 0.55,
     chapters: [
       {
@@ -118,7 +118,7 @@ const SCENES = {
   wash: {
     videoId: "video-lavagem",
     selector: ".scene--wash",
-    scrollEnd: { desktop: "+=180%", mobile: "+=140%" },
+    scrollEnd: "+=180%",
     movePhase: 0.58,
     chapters: [
       {
