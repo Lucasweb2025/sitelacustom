@@ -4,4 +4,4 @@ Site com scroll controlado por vídeo (GSAP + ScrollTrigger).
 
 ## GitHub Pages
 
-Publicado em: `https://<seu-usuario>.github.io/la-custom-scroll/`
+https://lucasweb2025.github.io/sitelacustom/
