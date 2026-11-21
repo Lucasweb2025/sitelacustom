@@ -1,23 +1,18 @@
 {
-  "name": "site-la-custom-efeito-scroll",
-  "version": "1.0.0",
-  "description": "Site com scroll controlado por vídeo (GSAP + ScrollTrigger).",
-  "main": "index.js",
+  "name": "site-la-custom",
+  "version": "2.0.0",
+  "description": "Site da L.A Custom com vídeos controlados pela rolagem (GSAP + ScrollTrigger + Lenis).",
+  "type": "module",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npx -y http-server@14.1.1 -p 5610 -c-1",
+    "test": "node --test"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Lucasweb2025/sitelacustom.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/Lucasweb2025/sitelacustom/issues"
-  },
-  "homepage": "https://github.com/Lucasweb2025/sitelacustom#readme",
+  "homepage": "https://lucasweb2025.github.io/sitelacustom/",
   "dependencies": {
     "cloudinary": "^2.10.0"
   }

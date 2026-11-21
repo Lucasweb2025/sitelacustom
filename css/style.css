@@ -65,8 +65,7 @@ video {
   align-items: center;
   height: var(--header-h);
   padding: 0 clamp(1.25rem, 4vw, 3rem);
-  background: linear-gradient(to bottom, rgba(8, 8, 9, 0.88), rgba(8, 8, 9, 0.35) 70%, transparent);
-  backdrop-filter: blur(10px);
+  background: linear-gradient(to bottom, rgba(8, 8, 9, 0.94), rgba(8, 8, 9, 0.45) 70%, transparent);
 }
 
 .header__logo {
@@ -476,10 +475,6 @@ video {
   backdrop-filter: none;
 }
 
-html.lite-mode .scene--boxes .chapter-panel {
-  background: transparent;
-}
-
 /* Glass stat cards — referência Ferrari */
 .scene-cards {
   position: absolute;
@@ -527,13 +522,7 @@ html.lite-mode .scene--boxes .chapter-panel {
   padding: 0.85rem 1rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 0.75rem;
-  background: rgba(12, 12, 14, 0.45);
-  backdrop-filter: blur(16px);
-}
-
-html.lite-mode .glass-stat {
-  background: rgba(12, 12, 14, 0.88);
-  backdrop-filter: none;
+  background: rgba(12, 12, 14, 0.74);
 }
 
 .glass-stat--thumb {
@@ -565,79 +554,6 @@ html.lite-mode .glass-stat {
   color: rgba(255, 255, 255, 0.55);
 }
 
-/* Feature cards — referência lateral */
-.feature-stack {
-  position: absolute;
-  right: clamp(1rem, 4vw, 3rem);
-  top: 50%;
-  width: min(24rem, calc(100% - 2rem));
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-  opacity: 0;
-}
-
-.feature-card {
-  display: grid;
-  grid-template-columns: 5.5rem 1fr;
-  gap: 0;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.85rem;
-  overflow: hidden;
-  background: rgba(12, 12, 14, 0.5);
-  backdrop-filter: blur(14px);
-  opacity: 0.45;
-  transform: scale(0.94);
-  transition:
-    opacity 0.45s var(--ease),
-    transform 0.5s var(--ease);
-}
-
-html.lite-mode .feature-card {
-  background: rgba(12, 12, 14, 0.9);
-  backdrop-filter: none;
-}
-
-.feature-card.is-active {
-  opacity: 1;
-  transform: scale(1);
-  border-color: rgba(201, 169, 110, 0.35);
-}
-
-.feature-card__media {
-  min-height: 5.5rem;
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.feature-card__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  min-height: 5.5rem;
-}
-
-.feature-card__body {
-  padding: 0.85rem 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.feature-card__title {
-  margin: 0 0 0.35rem;
-  font-size: 0.92rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-
-.feature-card__text {
-  margin: 0;
-  font-size: 0.72rem;
-  line-height: 1.45;
-  color: var(--muted);
-}
-
 /* Dock de serviços — referência marcas */
 .service-dock {
   position: absolute;
@@ -659,8 +575,7 @@ html.lite-mode .feature-card {
   font-weight: 700;
   letter-spacing: 0.06em;
   color: rgba(255, 255, 255, 0.55);
-  background: rgba(12, 12, 14, 0.35);
-  backdrop-filter: blur(10px);
+  background: rgba(12, 12, 14, 0.62);
   transition:
     border-color 0.3s var(--ease),
     color 0.3s var(--ease),
@@ -702,82 +617,6 @@ html.lite-mode .feature-card {
   50% {
     transform: translateY(6px);
   }
-}
-
-/* Service panels */
-.service-panels {
-  position: absolute;
-  top: 50%;
-  right: clamp(1rem, 5vw, 4rem);
-  z-index: 3;
-  width: min(24rem, calc(100% - 2rem));
-  transform: translateY(-50%);
-}
-
-.service-panel {
-  position: absolute;
-  inset: 0;
-  padding: 1.5rem 1.65rem;
-  border: 1px solid var(--line);
-  border-radius: 1rem;
-  background: rgba(12, 12, 14, 0.78);
-  backdrop-filter: blur(12px);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateX(40px) scale(0.98);
-  transition:
-    opacity 0.45s var(--ease),
-    transform 0.55s var(--ease),
-    visibility 0.45s;
-}
-
-html.lite-mode .service-panel {
-  background: rgba(12, 12, 14, 0.9);
-  backdrop-filter: none;
-}
-
-html.lite-mode .header {
-  backdrop-filter: none;
-  background: linear-gradient(to bottom, rgba(8, 8, 9, 0.94), transparent);
-}
-
-html.lite-mode .scene {
-  height: 200vh;
-}
-
-html.lite-mode .scene--wash {
-  height: 140vh;
-}
-
-html.lite-mode .scene--boxes,
-html.lite-mode .scene--wash {
-  margin-top: -10vh;
-}
-
-.service-panel.is-active {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(0) scale(1);
-}
-
-.service-panel__num {
-  display: inline-block;
-  margin-bottom: 0.75rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
-  color: var(--accent);
-}
-
-.service-panel h2 {
-  margin: 0 0 0.65rem;
-  font-size: clamp(1.35rem, 3vw, 1.85rem);
-  letter-spacing: -0.02em;
-}
-
-.service-panel p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.98rem;
 }
 
 /* CTA */
@@ -894,19 +733,6 @@ html.lite-mode .scene--wash {
     height: 30vh;
   }
 
-  .service-panels {
-    right: 1rem;
-    left: 1rem;
-    width: auto;
-  }
-
-  .scene__content {
-    max-width: none;
-  }
-
-  .hero-title {
-    font-size: clamp(2.8rem, 16vw, 4rem);
-  }
 }
 
 @media (max-width: 767px) {
@@ -946,19 +772,6 @@ html.lite-mode .scene--wash {
     min-height: 5.5rem;
   }
 
-  .feature-stack {
-    right: 1rem;
-    left: 1rem;
-    width: auto;
-    top: auto;
-    bottom: 6.5rem;
-    transform: none;
-  }
-
-  .feature-card {
-    grid-template-columns: 4.5rem 1fr;
-  }
-
   .service-dock {
     left: 1rem;
     bottom: auto;
@@ -973,9 +786,5 @@ html.lite-mode .scene--wash {
 @media (prefers-reduced-motion: reduce) {
   .scene__hint-arrow {
     animation: none;
-  }
-
-  .service-panel {
-    transition: none;
   }
 }

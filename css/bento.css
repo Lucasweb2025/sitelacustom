@@ -111,8 +111,7 @@
 .scene--entrance .glass-stats--prominent .glass-stat {
   padding: clamp(1rem, 2.5vw, 1.45rem) clamp(1.1rem, 2.5vw, 1.6rem);
   border-radius: 1rem;
-  background: rgba(12, 12, 14, 0.62);
-  backdrop-filter: blur(20px);
+  background: rgba(12, 12, 14, 0.8);
 }
 
 .scene--entrance .glass-stats--prominent .glass-stat--thumb {
