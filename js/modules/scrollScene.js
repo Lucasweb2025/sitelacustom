@@ -70,7 +70,12 @@ export function iniciarCena(cena, opcoes) {
 
   // A cada movimento da rolagem dentro da cena
   function aoRolar(rolagem) {
-    if (!cenaAtiva) return;
+    if (!cenaAtiva) {
+      // A página pode abrir já dentro da cena (ex.: a entrada, no topo). Nesse caso o
+      // aviso de "entrou na cena" não chega, então a cena é ativada aqui, na 1ª rolagem.
+      if (!rolagem.isActive) return;
+      aoEntrarNaCena();
+    }
 
     const progressoDaCena = rolagem.progress;
     atualizarTransicoes(progressoDaCena);
