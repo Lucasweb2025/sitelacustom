@@ -144,7 +144,7 @@
             </ul>
           </div>
 
-          <figure class="cartao-foto historia__foto" data-revelar>
+          <figure class="cartao-foto historia__foto" data-revelar tabindex="0" role="button" aria-label="Ver foto da equipe em tamanho grande">
             <img
               src="images/equipe-renato-garcia.webp"
               alt="Equipe da L.A Custom reunida na oficina, sob a iluminação hexagonal, com o Renato Garcia"
@@ -194,7 +194,9 @@
             <h2 class="secao__titulo" id="titulo-servicos" data-revelar>
               Tudo o que o seu carro precisa, <em>em um só lugar</em>.
             </h2>
-            <p class="secao__texto" data-revelar>Passe o mouse nos cards para conhecer cada serviço.</p>
+            <p class="secao__texto" data-revelar>
+              Passe o mouse nos cards para conhecer cada serviço. Clique para ver a foto.
+            </p>
           </header>
 
           <div class="servicos__grade">
@@ -441,6 +443,23 @@
     </footer>
     </div>
 
+    <!-- ===================== VISOR DE FOTO =====================
+         Abre por cima do site quando a pessoa clica num card de serviço,
+         numa foto do carrossel ou na foto da equipe. O conteúdo é preenchido
+         pelo js/modules/lightbox.js. Fecha no X, na tecla Esc ou clicando fora. -->
+    <dialog class="visor" id="visor-de-foto" aria-labelledby="visor-titulo">
+      <button class="visor__fechar" type="button" aria-label="Fechar foto">&times;</button>
+      <figure class="visor__figura">
+        <img class="visor__foto" src="" alt="" />
+        <figcaption class="visor__legenda">
+          <span class="visor__sobretitulo"></span>
+          <strong class="visor__titulo" id="visor-titulo"></strong>
+          <p class="visor__texto"></p>
+          <a class="btn btn--primary visor__acao" href="#" target="_blank" rel="noopener noreferrer">Pedir orçamento</a>
+        </figcaption>
+      </figure>
+    </dialog>
+
     <!-- Bibliotecas de fora: rolagem suave (Lenis) e animações (GSAP + ScrollTrigger) -->
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
@@ -462,6 +481,8 @@
     <link rel="modulepreload" href="js/modules/gallery.js" />
     <link rel="modulepreload" href="js/modules/marquee.js" />
     <link rel="modulepreload" href="js/modules/navigation.js" />
+    <link rel="modulepreload" href="js/modules/lightbox.js" />
+    <link rel="modulepreload" href="js/content/contact.js" />
     <script type="module" src="js/main.js"></script>
   </body>
 </html>

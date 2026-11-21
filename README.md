@@ -48,6 +48,8 @@ O site é uma página só. De cima para baixo:
 - **Fichas por cima dos vídeos:** cada card sobe e ganha brilho dourado; a foto aproxima.
 - **Barra de serviços (PPF, Vinil, Película, Lavagem, Detalhe):** são botões. O clique leva até o card daquele serviço na seção "Serviços" e deixa o card aceso por alguns segundos.
 
+**Visor de foto (clique):** clicar num card de serviço, numa foto do carrossel ou na foto da equipe abre a foto grande por cima do site, com o texto ao lado. Nos serviços aparece o botão **"Pedir orçamento de [serviço]"** e nos projetos **"Quero um projeto assim"**: os dois abrem o WhatsApp com a mensagem já escrita. Fecha no X, com Esc ou clicando fora. Também funciona pelo teclado (Tab até a foto e Enter).
+
 **Transições entre seções e cenas:** cada seção "derrete" no vídeo vizinho com um degradê, e nas emendas seção → cena passa uma **faixa com a logo da L.A em loop**, que disfarça a troca (`[data-faixa-logos]` no `index.html`).
 
 **Dados oficiais usados** (tirados do Instagram [@l.acustom](https://www.instagram.com/l.acustom/) e do [linktr.ee/lacustom](https://linktr.ee/lacustom)):
@@ -93,6 +95,7 @@ sitelacustom/
 │   │   ├── scenes.js       ← textos dos capítulos e trecho de vídeo de cada um
 │   │   ├── cards.js        ← ficha, grade bento e barra de serviços das cenas
 │   │   ├── gallery.js      ← fotos e legendas do carrossel "Projetos recentes"
+│   │   ├── contact.js      ← número do WhatsApp usado pelo visor de foto
 │   │   └── media.js        ← lista das fotos usadas nos cartões
 │   └── modules/            ← ⚙️ LÓGICA (só mexer sabendo o que está fazendo)
 │       ├── scrollScene.js  ← o "motor" de cada cena (junta tudo)
@@ -102,12 +105,14 @@ sitelacustom/
 │       ├── gallery.js      ← monta o carrossel "Projetos recentes"
 │       ├── marquee.js      ← faixas que andam sozinhas (logo em loop) e pausa fora da tela
 │       ├── navigation.js   ← botões da barra de serviços e links do menu deslizando
+│       ├── lightbox.js     ← visor de foto (abre a foto grande ao clicar)
 │       ├── header.js       ← menu do topo
 │       ├── math.js         ← contas do efeito (testadas em tests/)
 │       └── environment.js  ← computador ou celular? animações reduzidas?
 ├── images/                 ← fotos (WebP) tiradas do Instagram + logo
 │   ├── logo-lacustom.webp  ← logo oficial em versão clara, fundo transparente
 │   └── galeria/            ← fotos do carrossel (480 x 600)
+│       └── grande/         ← as mesmas fotos em 960 x 1200, abertas no visor (só baixam ao clicar)
 ├── videos/                 ← os 4 vídeos do site (já otimizados)
 ├── tests/
 │   └── math.test.js        ← testes automáticos das contas
@@ -169,7 +174,8 @@ Fotos e legendas em **`js/content/gallery.js`**, divididas em duas faixas. Para 
    ffmpeg -i FOTO.jpg -vf "crop=ih*4/5:ih,scale=480:600" -c:v libwebp -quality 76 images/galeria/nome-da-foto.webp
    ```
 
-3. Acrescente um item na lista de `js/content/gallery.js` (foto, carro, detalhe e descrição).
+3. Gere também a versão grande, com o mesmo nome, em `images/galeria/grande/` (troque `scale=480:600` por `scale=960:1200`). É ela que abre no visor ao clicar.
+4. Acrescente um item na lista de `js/content/gallery.js` (foto, carro, detalhe e descrição).
 
 ### Fotos dos cartões e seções
 

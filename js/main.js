@@ -20,6 +20,7 @@ import { iniciarMenuDoTopo } from "./modules/header.js";
 import { iniciarGaleria } from "./modules/gallery.js";
 import { iniciarFaixasDeLogo } from "./modules/marquee.js";
 import { ligarBotoesDeServico, suavizarLinksDoMenu } from "./modules/navigation.js";
+import { iniciarVisorDeFoto } from "./modules/lightbox.js";
 import {
   iniciarAvisoDeRolagem,
   iniciarRevelacaoDasSecoes,
@@ -79,6 +80,7 @@ function iniciarSite() {
   iniciarFaixasDeLogo();
   ligarBotoesDeServico();
   suavizarLinksDoMenu();
+  iniciarVisorDeFoto();
   baixarVideosAoSeAproximar();
   iniciarAvisoDeRolagem();
 

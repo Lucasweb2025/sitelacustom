@@ -19,14 +19,25 @@ import { GALERIA } from "../content/gallery.js";
 import { protegerTexto } from "./templates.js";
 import { animarSoNaTela } from "./marquee.js";
 
+/**
+ * Endereço da versão grande da foto (aberta no visor ao clicar).
+ * Fica em images/galeria/grande, com o mesmo nome da foto pequena.
+ */
+function fotoGrande(item) {
+  return item.fotoGrande || item.foto.replace("images/galeria/", "images/galeria/grande/");
+}
+
 /** Monta uma foto da galeria com a legenda (nome do carro + detalhe). */
 function montarFotoDaGaleria(item, ehCopia) {
   // A cópia é só para o efeito infinito: leitores de tela e o teclado a ignoram.
-  const ocultarDaAcessibilidade = ehCopia ? ' aria-hidden="true"' : "";
+  // A original pode ser aberta com clique ou com Enter (tabindex + role="button").
+  const atributos = ehCopia
+    ? 'aria-hidden="true"'
+    : `tabindex="0" role="button" aria-label="Ver foto: ${protegerTexto(item.carro)}"`;
   const textoAlternativo = ehCopia ? "" : protegerTexto(item.descricao);
 
   return `
-    <figure class="galeria__foto"${ocultarDaAcessibilidade}>
+    <figure class="galeria__foto" ${atributos} data-foto-grande="${protegerTexto(fotoGrande(item))}">
       <img src="${protegerTexto(item.foto)}" alt="${textoAlternativo}" width="480" height="600" loading="lazy" decoding="async" />
       <figcaption class="galeria__legenda">
         <strong>${protegerTexto(item.carro)}</strong>

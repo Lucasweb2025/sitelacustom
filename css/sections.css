@@ -735,6 +735,191 @@
   transform: scale(1.06);
 }
 
+/* ---------- Itens que abrem a foto grande ao clicar ---------- */
+
+.cartao-servico,
+.galeria__foto,
+.historia__foto {
+  cursor: zoom-in;
+}
+
+/* Aviso "Ver foto" que aparece no canto do card ao passar o mouse */
+.cartao-servico::before {
+  content: "Ver foto ⤢";
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  z-index: 2;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid rgba(201, 169, 110, 0.6);
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #fff;
+  background: rgba(8, 8, 9, 0.75);
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity 0.4s var(--ease),
+    transform 0.4s var(--ease);
+}
+
+.cartao-servico:hover::before,
+.cartao-servico:focus-visible::before {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Foto do card um pouco mais clara no hover (antes ficava escura demais) */
+.cartao-servico:hover img,
+.cartao-servico:focus-visible img {
+  filter: brightness(0.72) saturate(1.1);
+}
+
+.galeria__foto:focus-visible,
+.historia__foto:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ---------- Visor de foto (abre por cima do site) ---------- */
+
+.visor {
+  width: min(64rem, calc(100vw - 3rem));
+  max-height: calc(100vh - 3rem);
+  padding: 0;
+  overflow: visible;
+  border: 1px solid rgba(201, 169, 110, 0.35);
+  border-radius: 1.2rem;
+  color: var(--text);
+  background: #0d0c10;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.7);
+}
+
+.visor[open] {
+  animation: visor-abrir 0.45s var(--ease);
+}
+
+/* Fundo escuro atrás do visor */
+.visor::backdrop {
+  background: rgba(5, 5, 6, 0.82);
+  backdrop-filter: blur(6px);
+}
+
+@keyframes visor-abrir {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Foto à esquerda, texto à direita */
+.visor__figura {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(15rem, 1fr);
+  margin: 0;
+  max-height: calc(100vh - 3rem);
+}
+
+.visor__foto {
+  width: 100%;
+  height: 100%;
+  max-height: calc(100vh - 3rem);
+  object-fit: cover;
+  border-radius: 1.2rem 0 0 1.2rem;
+  background: var(--surface);
+}
+
+.visor__legenda {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.9rem;
+  padding: clamp(1.75rem, 4vw, 3rem);
+}
+
+.visor__sobretitulo {
+  font-size: 0.74rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.visor__titulo {
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.visor__texto {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.visor__acao {
+  align-self: flex-start;
+  margin-top: 0.6rem;
+  background: var(--accent);
+  color: #111014;
+}
+
+.visor__acao:hover {
+  transform: translateY(-2px);
+}
+
+.visor__fechar {
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border: 1px solid rgba(201, 169, 110, 0.6);
+  border-radius: 999px;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #fff;
+  background: #0d0c10;
+  cursor: pointer;
+  transition:
+    transform 0.3s var(--ease),
+    background 0.3s var(--ease);
+}
+
+.visor__fechar:hover,
+.visor__fechar:focus-visible {
+  transform: rotate(90deg);
+  background: #1a181e;
+  outline: none;
+}
+
+@media (max-width: 767px) {
+  .visor__figura {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+
+  .visor__foto {
+    max-height: 55vh;
+    border-radius: 1.2rem 1.2rem 0 0;
+  }
+
+  .visor__fechar {
+    top: 0.6rem;
+    right: 0.6rem;
+  }
+}
+
 /* ---------- Logo oficial (topo e rodapé) ---------- */
 
 .logo {
