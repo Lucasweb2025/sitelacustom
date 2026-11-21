@@ -1,22 +1,22 @@
 /**
- * CARDS ? edite nomes, textos e imagens aqui.
+ * CARDS — edite nomes, textos e imagens aqui.
  */
 const CARDS = {
   stats: {
     vehicleLabel: "Ferrari 296 GTB",
     thumb: MEDIA.shelby,
     items: [
-      { value: "15h", label: "BATTERY LIFE" },
-      { value: "300mi", label: "RANGE" },
-      { value: "120mph", label: "TOP SPEED" },
+      { value: "830cv", label: "POTÊNCIA" },
+      { value: "2.9s", label: "0-100 KM/H" },
+      { value: "330km/h", label: "VEL. MÁXIMA" },
     ],
   },
 
   bentoGrid: [
     {
       type: "text",
-      title: "Adaptive Suspension",
-      text: "Real time suspension adjustments deliver maximum control, precision, and driving confidence everywhere.",
+      title: "Ajuste de Precisão",
+      text: "Cada etapa é aplicada milímetro a milímetro, garantindo acabamento impecável e proteção duradoura em qualquer condição.",
       variant: "warm",
     },
     {
@@ -27,18 +27,18 @@ const CARDS = {
     {
       type: "image",
       image: MEDIA.shelby,
-      alt: "Detalhe de ve�culo em destaque",
+      alt: "Detalhe de veículo em destaque",
     },
     {
       type: "text",
-      title: "Digital Performance",
-      text: "Integrated driving analytics provide instant feedback for speed, balance, and lap optimization.",
+      title: "Acompanhamento Digital",
+      text: "Registro fotográfico e acompanhamento de cada etapa do serviço, do diagnóstico à entrega.",
       variant: "light",
     },
     {
       type: "text",
-      title: "Signature Lighting",
-      text: "Distinctive LED lighting system creates an unforgettable presence during every night drive.",
+      title: "Iluminação Profissional",
+      text: "Sistema de iluminação técnica que garante precisão em cada detalhe, do polimento ao envelopamento.",
       variant: "dark",
     },
     {
@@ -71,7 +71,7 @@ const CARDS = {
     processo: { stats: true, vehicleLabel: "L.A CUSTOM", thumb: MEDIA.aston, dockIndex: 4 },
     detalhamento: {
       stats: true,
-      vehicleLabel: "Corre�?o de pintura",
+      vehicleLabel: "Correção de pintura",
       thumb: MEDIA.featureDetail,
       dockIndex: 3,
     },

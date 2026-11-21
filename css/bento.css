@@ -1,4 +1,4 @@
-/* Bento grid ? refer?ncia zig-zag (sobe de baixo para cima) */
+/* Bento grid — referência zig-zag (sobe de baixo para cima) */
 .bento-grid {
   position: absolute;
   right: clamp(1rem, 4vw, 3rem);
@@ -84,7 +84,7 @@
   filter: saturate(1.35) sepia(0.08) hue-rotate(-6deg) brightness(1);
 }
 
-/* Shelby stats ? grande, na frente do fot?grafo (se??o entrada) */
+/* Shelby stats — grande, na frente do fotógrafo (seção entrada) */
 .scene--entrance .glass-stats--prominent {
   right: clamp(1.25rem, 6vw, 5rem);
   bottom: auto;

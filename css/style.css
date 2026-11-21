@@ -53,7 +53,7 @@ video {
   max-width: 100%;
 }
 
-/* Header  estilo referncia premium */
+/* Header â€” estilo referÃªncia premium */
 .header {
   position: fixed;
   top: 0;
@@ -392,7 +392,7 @@ video {
   letter-spacing: -0.02em;
 }
 
-/* Chapter panels  abas com letras grandes (estilo referncia) */
+/* Chapter panels â€” abas com letras grandes (estilo referÃªncia) */
 .chapter-panels {
   position: absolute;
   inset: 0;
@@ -480,7 +480,7 @@ html.lite-mode .scene--boxes .chapter-panel {
   background: transparent;
 }
 
-/* Glass stat cards  referncia Ferrari */
+/* Glass stat cards â€” referÃªncia Ferrari */
 .scene-cards {
   position: absolute;
   inset: 0;
@@ -565,7 +565,7 @@ html.lite-mode .glass-stat {
   color: rgba(255, 255, 255, 0.55);
 }
 
-/* Feature cards  referncia lateral */
+/* Feature cards â€” referÃªncia lateral */
 .feature-stack {
   position: absolute;
   right: clamp(1rem, 4vw, 3rem);
@@ -638,7 +638,7 @@ html.lite-mode .feature-card {
   color: var(--muted);
 }
 
-/* Dock de servios  referncia marcas */
+/* Dock de serviÃ§os â€” referÃªncia marcas */
 .service-dock {
   position: absolute;
   left: clamp(1.25rem, 5vw, 4rem);
