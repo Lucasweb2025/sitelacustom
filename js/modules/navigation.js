@@ -66,7 +66,12 @@ export function ligarBotoesDeServico() {
 export function suavizarLinksDoMenu() {
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener("click", (evento) => {
-      const destino = document.querySelector(link.getAttribute("href"));
+      // Confere o endereço na hora do clique: um link pode ter mudado depois
+      // (ex.: o botão do visor de foto vira um link do WhatsApp).
+      const endereco = link.getAttribute("href") || "";
+      if (!/^#[\w-]+$/.test(endereco)) return;
+
+      const destino = document.getElementById(endereco.slice(1));
       if (!destino) return;
       evento.preventDefault();
       rolarAte(destino);
