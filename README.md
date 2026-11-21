@@ -20,7 +20,8 @@ Site de apresentação da **L.A Custom** (PPF, envelopamento, film, lavagem e co
 8. [Ajustes de suavidade](#8-ajustes-de-suavidade)
 9. [Padrões do código](#9-padrões-do-código)
 10. [Pendências](#10-pendências)
-11. [Problemas comuns](#11-problemas-comuns)
+11. [Histórico](#11-histórico)
+12. [Problemas comuns](#12-problemas-comuns)
 
 ---
 
@@ -64,14 +65,16 @@ O site é uma página só. De cima para baixo:
 1. Quando a cena chega ao topo da tela, ela fica **presa** (não desce com a página).
 2. Enquanto a pessoa continua rolando, o **vídeo avança** (ou volta, se rolar para cima).
 3. Cada cena tem **capítulos**. Em cada capítulo, o vídeo anda um trecho, **para**, e aí aparece um título grande com uma frase.
-4. Junto com o título aparecem **cartões**: a ficha do carro (foto + números), a grade "bento" (na cena dos boxes) e a barra de serviços (PPF, WRAP, FILM, WASH, DETAIL).
-5. Terminada a cena, ela é "solta" e a próxima entra, com um escurecimento suave entre as duas.
+4. Junto com o título aparecem **cartões**: a ficha (foto + 3 destaques), a grade "bento" (na cena dos boxes) e a barra de botões de serviço (PPF, Vinil, Película, Lavagem, Detalhe).
+5. Terminada a cena, ela é "solta" e a página segue para a próxima seção, com o degradê e a faixa de logos disfarçando a emenda.
+
+Cada cena tem **exatamente a altura da tela** (`.scene { height: 100vh }` em `css/style.css`). Quem segura a cena enquanto a pessoa rola é o ScrollTrigger (o "pin"). Não aumente essa altura: o vídeo "sobra" na tela depois da cena e aparece repetido.
 
 **Ferramentas usadas** (carregadas de fora, pelo `index.html`):
 
 - **GSAP + ScrollTrigger**: animações e leitura da rolagem.
 - **Lenis**: rolagem suave, com inércia.
-- **Cloudinary**: hospeda as **fotos** e entrega cada uma no formato mais leve.
+- **Cloudinary**: hospeda a foto do Shelby e as **capas dos vídeos** (as fotos novas ficam na pasta `images/`).
 - **GitHub Pages**: hospeda o site (gratuito).
 
 O site é feito só com **HTML, CSS e JavaScript**, sem etapa de "build": os arquivos que estão aqui são exatamente os que vão para o ar.
@@ -111,6 +114,9 @@ sitelacustom/
 │       └── environment.js  ← computador ou celular? animações reduzidas?
 ├── images/                 ← fotos (WebP) tiradas do Instagram + logo
 │   ├── logo-lacustom.webp  ← logo oficial em versão clara, fundo transparente
+│   ├── equipe-renato-garcia.webp ← foto da equipe (Nossa história; foto de @_gravalos)
+│   ├── ppf-equipe.webp, peliculas-f150.webp, envelopamento-gt3.webp,
+│   │   lavagem-tecnica.webp, coating-ceramico.webp ← fotos dos 5 cards de serviço (720 x 900)
 │   └── galeria/            ← fotos do carrossel (480 x 600)
 │       └── grande/         ← as mesmas fotos em 960 x 1200, abertas no visor (só baixam ao clicar)
 ├── videos/                 ← os 4 vídeos do site (já otimizados)
@@ -140,8 +146,11 @@ Arquivo: **`js/content/scenes.js`**. Cada capítulo tem:
   texto: "Película de proteção ...",   // frase abaixo do título
   inicioDoVideo: 0.28,                  // trecho do vídeo (0 = começo, 1 = fim)
   fimDoVideo: 0.58,
+  faseDoVideo: 0.8,                     // (opcional) pausa própria deste capítulo
 }
 ```
+
+O hero usa `faseDoVideo: 0.8` (pausa curta), porque ali não tem cartões; uma pausa longa no começo do site parecia uma "travadinha".
 
 ### Cartões (ficha do carro, grade bento, barra de serviços)
 
@@ -150,6 +159,25 @@ Arquivo: **`js/content/cards.js`**:
 - **`gradesBento`:** uma grade de 6 blocos para cada capítulo da cena dos boxes (estrutura, PPF e vinil). Assim o conteúdo não se repete de um capítulo para o outro.
 - **`barraDeServicos`:** os botões e o card de serviço que cada um mostra (`cartao` = o `data-servico` do card no `index.html`).
 - **`porCapitulo`:** o que aparece em cada capítulo: qual botão acende, e o título, a foto e os 3 destaques da ficha.
+
+### Cards de serviço e botões da barra
+
+Os 5 cards ficam no `index.html` (seção `SERVIÇOS`). Cada card tem um `data-servico` (ex.: `data-servico="ppf"`), e o botão da barra aponta para ele em `js/content/cards.js` (`barraDeServicos`, campo `cartao`). Para incluir um serviço novo:
+
+1. Copie um bloco `<div class="servicos__item">…</div>` no `index.html`, troque foto, número, título, resumo e detalhe, e dê um `data-servico` novo.
+2. Se quiser um botão para ele, acrescente `{ rotulo: "Nome", cartao: "o-data-servico" }` em `barraDeServicos`.
+3. A grade tem 5 colunas (`.servicos__grade` em `css/sections.css`); com 6 cards, mude para `repeat(3, 1fr)` ou `repeat(6, 1fr)`.
+
+O texto do visor de foto e a mensagem do WhatsApp são lidos do próprio card: não precisa mexer em mais nada.
+
+### WhatsApp e endereço
+
+O número aparece em **dois tipos de lugar**. Se mudar, troque em todos:
+
+- `js/content/contact.js` (botão do visor de foto);
+- `index.html`: procure por `wa.me/5511996741058` (botão do orçamento, menu de celular, rodapé e o botão inicial do visor).
+
+O endereço e o link do Google Maps ficam no bloco `ORÇAMENTO` do `index.html`.
 
 ### Textos das seções (história, serviços, frase, orçamento), menu e rodapé
 
@@ -260,7 +288,17 @@ git commit -m "Descreva o que mudou"
 git push
 ```
 
-Em 1 a 2 minutos o site no ar é atualizado. Depois confira em https://lucasweb2025.github.io/sitelacustom/.
+Em 1 a 2 minutos o site no ar é atualizado. Depois confira em https://lucasweb2025.github.io/sitelacustom/ (com **Ctrl + Shift + R**, para não ver a versão guardada no navegador).
+
+Para saber se a publicação terminou (precisa do GitHub CLI, `gh`):
+
+```bash
+gh api repos/Lucasweb2025/sitelacustom/pages/builds/latest --jq '.status + " " + .commit[0:7]'
+```
+
+Quando aparecer `built` com o código do seu último commit, já está no ar.
+
+> Este site é separado do site atual **lacustom.com.br** (o link "Conheça nosso site" do Linktree).
 
 ---
 
@@ -272,7 +310,14 @@ As contas do efeito de rolagem (em `js/modules/math.js`) têm testes automático
 npm test
 ```
 
-Eles conferem, por exemplo, que no começo da cena o texto está escondido e o vídeo andando, e que no fim do capítulo o vídeo para e o texto aparece inteiro.
+São 12 testes. Eles conferem, por exemplo:
+
+- no começo da cena, o texto está escondido e o vídeo andando;
+- no fim do capítulo, o vídeo para e o texto aparece inteiro;
+- um capítulo pode ter a própria pausa (como o hero);
+- o ponto para onde um botão leva é o meio da pausa do capítulo, com o texto inteiro na tela.
+
+> **Ao testar no navegador:** se a janela do Chrome estiver minimizada ou coberta por outra, o Chrome congela as animações e a rolagem suave (cai para 2 ou 3 quadros por segundo). Isso não é defeito do site; teste com a janela visível.
 
 ---
 
@@ -292,9 +337,11 @@ O que foi feito:
 2. **Cada vídeo é baixado uma vez só.** Antes, ao sair de uma cena, o vídeo era descartado e baixado de novo na volta.
 3. **Carregamento na hora certa:** o vídeo da entrada começa a baixar assim que a página abre; os outros, quando a pessoa está chegando perto da cena deles.
 4. **Pulos do vídeo organizados:** no máximo um pedido por quadro da tela, sem acumular pedidos (veja `criarControleDeBusca` em `js/modules/videos.js`).
-5. **Sem desfoque de fundo sobre o vídeo:** o efeito de "vidro fosco" (`backdrop-filter`) pesava muito com o vídeo em movimento. Foi trocado por um fundo escuro semitransparente.
+5. **Sem desfoque de fundo sobre o vídeo:** o efeito de "vidro fosco" (`backdrop-filter`) pesava muito com o vídeo em movimento. Foi trocado por fundo escuro sólido.
 6. **Fonte mais leve:** carrega só os 4 pesos usados da fonte Urbanist.
 7. **Nada de vídeo no celular:** como o site ainda é só para computador, o celular não baixa vídeo nenhum.
+8. **Fotos em WebP e sob demanda:** todas as fotos novas são WebP (de 30 a 100 KB cada) e só baixam quando chegam perto da tela (`loading="lazy"`). As versões grandes do carrossel só baixam quando alguém clica.
+9. **Movimento só na tela:** o carrossel e as faixas de logo param quando saem da tela (`animarSoNaTela` em `js/modules/marquee.js`).
 
 Peso dos vídeos (1280px):
 
@@ -324,7 +371,14 @@ Em **`js/content/scenes.js`**, cada cena tem:
 - `distanciaDeRolagem`: o tamanho da cena (ex.: `"+=260%"` = rolar 2,6 vezes a altura da tela).
 - `faseDoVideo`: que parte de cada capítulo é do vídeo andando (ex.: `0.5` = metade). **O resto é a pausa em que os textos e cartões ficam parados na tela.** Número menor = cartões na tela por mais tempo.
 
-A velocidade do carrossel fica em `css/sections.css` (`animation: galeria-andar-esquerda 70s`): número maior = mais devagar.
+Um capítulo pode ter a sua própria `faseDoVideo`, que vale só para ele (é o caso do hero).
+
+Velocidades em `css/sections.css` (número maior = mais devagar):
+
+- carrossel: `animation: galeria-andar-esquerda 70s` (faixa de cima) e `80s` (faixa de baixo);
+- faixa de logos: `animation: faixa-andar 45s`.
+
+Tempo que o card de serviço fica aceso depois do clique num botão: `TEMPO_DO_CARD_ACESO_MS` em `js/modules/navigation.js` (2600 = 2,6 segundos).
 
 ---
 
@@ -336,6 +390,7 @@ A velocidade do carrossel fica em `css/sections.css` (`animation: galeria-andar-
 - **Contas separadas da página** (`math.js`), para poderem ser testadas.
 - **Segurança:** todo texto passa por `protegerTexto` antes de ir para a página. Isso impede que algum texto seja interpretado como código (proteção contra XSS).
 - **À prova de falhas:** se as animações derem erro, o site continua aparecendo, só que sem o efeito.
+- **Acessibilidade:** quem pediu ao sistema para reduzir animações vê o site sem movimento; o visor de foto é um `<dialog>` (fecha com Esc e prende o foco do teclado); cards e fotos abrem com Tab + Enter; toda foto tem descrição (`alt`).
 - Os **nomes de classe do CSS** (ex.: `.scene__video`, `.chapter-panel`) seguem o padrão BEM e ficaram como estavam, porque o HTML e o CSS dependem deles.
 
 ---
@@ -345,13 +400,39 @@ A velocidade do carrossel fica em `css/sections.css` (`animation: galeria-andar-
 - [ ] **Versão para celular** (hoje bloqueada). As seções novas e o carrossel já se ajustam a telas pequenas; falta liberar e adaptar as cenas de vídeo.
 - [ ] **Vídeos originais:** recodificar a partir dos arquivos gravados, para ganhar qualidade.
 - [ ] **Conferir a copy** da seção "Nossa história" com a equipe (ano de fundação, se quiserem citar).
+- [ ] **Foto da equipe:** é do fotógrafo @_gravalos (post em parceria com a L.A Custom). Está creditada na legenda; vale confirmar com ele o uso no site.
+- [ ] **Definir o papel deste site** em relação ao site atual, lacustom.com.br.
 - [x] WhatsApp, endereço e Instagram reais (vindos do Linktree oficial).
-- [x] Menu em português.
-- [x] Logo oficial no topo e no rodapé.
+- [x] Menu e botões em português.
+- [x] Logo oficial no topo, no rodapé e no ícone da aba.
 
 ---
 
-## 11. Problemas comuns
+## 11. Histórico
+
+Commits principais (mais recentes no fim):
+
+| Data | Commit | O que mudou |
+|---|---|---|
+| 15/06/2026 | `d15e7c0` | Última versão antiga (antes da otimização) |
+| 20/11/2026 | `3341995` | Acentos quebrados corrigidos (arquivos salvos em UTF-8) |
+| 20/11/2026 | `c35b663` | Otimização: vídeos recodificados, código em módulos, README |
+| 20/11/2026 | `84a25df` | Corrige o vídeo da entrada parado na 1ª rolagem |
+| 20/11/2026 | `617d4ad` | Conteúdo real, novas seções, carrossel, logo, botões e transições |
+| 21/11/2026 | `729f59f` | Visor de foto com orçamento no WhatsApp |
+| 21/11/2026 | `5e76e1e` | Corrige erro no console do botão do visor |
+
+**Defeitos antigos que foram encontrados e corrigidos** (bom saber, para não voltarem):
+
+- **Títulos dos capítulos nunca apareciam:** o painel tinha `opacity: 0` fixo no CSS e a classe de ativo não mudava isso. Agora `.chapter-panel.is-active` tem `opacity: 1`.
+- **Vídeo repetido depois da cena** (Mustang e correção de pintura): as cenas tinham 200vh de altura. Agora têm 100vh.
+- **Menu acendia o link errado:** os gatilhos do menu eram criados antes das cenas presas e calculavam posições antigas. Agora são criados depois (ordem em `js/main.js`).
+- **Vídeo da entrada parado na primeira rolagem:** quando a página abre dentro da cena, o aviso de "entrou na cena" não chega. A cena agora é ativada na primeira rolagem (`aoRolar` em `js/modules/scrollScene.js`).
+- **Cards invisíveis:** a animação de entrada e o efeito do mouse mexiam nas mesmas propriedades do mesmo elemento. Por isso cada card fica dentro de uma "moldura" (`.servicos__item`).
+
+---
+
+## 12. Problemas comuns
 
 **O vídeo trava ou "pula" na rolagem**
 O vídeo provavelmente não foi preparado com quadro-chave a cada 0,5s. Rode o `ffprobe` da seção 3 e recodifique se precisar.
@@ -364,3 +445,12 @@ O vídeo provavelmente não foi preparado com quadro-chave a cada 0,5s. Rode o `
 
 **Mudei um texto e quebrou tudo**
 Confira se não faltou uma aspa `"` ou uma vírgula `,` no arquivo de `js/content/`. Abra o site, aperte **F12** e veja a aba **Console**: ela mostra o arquivo e a linha do erro.
+
+**Coloquei uma foto nova e ela não aparece**
+Confira o caminho (maiúsculas e minúsculas contam no GitHub Pages: `Foto.webp` é diferente de `foto.webp`) e recarregue com **Ctrl + Shift + R**.
+
+**Um botão da barra não leva a lugar nenhum**
+O `cartao` do botão em `js/content/cards.js` precisa ser igual ao `data-servico` de um card no `index.html`.
+
+**As animações ou a rolagem ficaram lentas só no meu teste**
+Veja se a janela do Chrome está visível (seção 6): janela minimizada ou coberta congela as animações.
