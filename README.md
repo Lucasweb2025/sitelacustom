@@ -26,15 +26,36 @@ Site de apresentação da **L.A Custom** (PPF, envelopamento, film, lavagem e co
 
 ## 1. Como o site funciona
 
-O site é uma página só, dividida em **4 cenas** e um bloco final de contato:
+O site é uma página só. De cima para baixo:
 
-| # | Cena | Vídeo | Comportamento |
-|---|------|-------|---------------|
-| 1 | Entrada (fachada + Shelby GT500) | `videos/entrada.mp4` | vídeo segue a rolagem |
-| 2 | Boxes (PPF e envelopamento) | `videos/boxes.mp4` | vídeo segue a rolagem + grade de cartões |
-| 3 | Lavagem (o carro amarelo) | `videos/lavagem.mp4` | vídeo **toca sozinho em loop** |
-| 4 | Correção de pintura | `videos/detalhamento.mp4` | vídeo segue a rolagem |
-| — | "Agende seu orçamento" | — | botão de WhatsApp |
+| # | Parte | Tipo | O que tem |
+|---|-------|------|-----------|
+| 1 | Entrada (fachada + Shelby GT500) | cena com vídeo | vídeo segue a rolagem; ficha com +17 anos, 86 mil seguidores e SEMA |
+| 2 | Nossa história (`#historia`) | seção | texto sobre a loja, números e a foto da equipe com o Renato Garcia (foto: @_gravalos) |
+| 3 | Estrutura / boxes (`#estrutura`) | cena com vídeo | vídeo segue a rolagem; uma grade "bento" diferente em cada capítulo (estrutura, PPF, vinil) |
+| 4 | Serviços (`#servicos`) | seção | 5 cards com foto (PPF, películas, envelopamento, lavagem, detail). Fica presa na tela um pouco |
+| 5 | Lavagem, o carro amarelo (`#padrao`) | cena com vídeo | vídeo **toca sozinho em loop**; ficha com o processo de lavagem |
+| 6 | Frase da marca | seção | "Seu carro é a extensão de quem você é." |
+| 7 | Correção de pintura (`#detalhamento`) | cena com vídeo | vídeo segue a rolagem; ficha do coating |
+| 8 | Projetos recentes (`#projetos`) | seção | **carrossel** de fotos de projetos, em duas faixas |
+| 9 | Orçamento (`#contato`) | seção | WhatsApp, endereço e Instagram |
+
+**Efeitos ao passar o mouse** (só no computador):
+
+- **Cards de serviço:** o card sobe, ganha borda dourada, a foto aproxima, o texto completo aparece e os outros ficam apagados.
+- **Galeria:** a faixa para, a foto aproxima e mostra o nome do carro.
+- **Fotos da grade bento e da história:** a foto aproxima e a legenda sobe.
+- **Fichas por cima dos vídeos:** cada card sobe e ganha brilho dourado; a foto aproxima.
+- **Barra de serviços (PPF, Vinil, Película, Lavagem, Detalhe):** são botões. O clique leva até o card daquele serviço na seção "Serviços" e deixa o card aceso por alguns segundos.
+
+**Transições entre seções e cenas:** cada seção "derrete" no vídeo vizinho com um degradê, e nas emendas seção → cena passa uma **faixa com a logo da L.A em loop**, que disfarça a troca (`[data-faixa-logos]` no `index.html`).
+
+**Dados oficiais usados** (tirados do Instagram [@l.acustom](https://www.instagram.com/l.acustom/) e do [linktr.ee/lacustom](https://linktr.ee/lacustom)):
+
+- WhatsApp (11) 99674-1058 (botão já abre com a mensagem "Vim pelo site e quero um orçamento")
+- Endereço: Av. dos Imarés, 398, Moema, São Paulo
+- Avaliação no Google: `g.page/r/CQq8jrJz9e56EAE/review`
+- Bio: "Seu carro é a extensão de quem você é. + 17 anos elevando o padrão da estética automotiva."
 
 **O efeito, passo a passo:**
 
@@ -59,25 +80,34 @@ O site é feito só com **HTML, CSS e JavaScript**, sem etapa de "build": os arq
 
 ```
 sitelacustom/
-├── index.html              ← a página (estrutura das cenas, vídeos, menu e rodapé)
+├── index.html              ← a página: cenas, seções (história, serviços, projetos, orçamento), menu e rodapé
+├── favicon.png             ← ícone da aba do navegador (o "A" da logo)
 ├── css/
 │   ├── style.css           ← visual geral (menu, cenas, textos, cartões, rodapé)
 │   ├── bento.css           ← visual da grade "bento" e da ficha grande do Shelby
+│   ├── sections.css        ← seções novas, carrossel, logo e todos os efeitos de mouse
 │   └── desktop-only.css    ← aviso "abra no computador" em telas pequenas
 ├── js/
 │   ├── main.js             ← PONTO DE PARTIDA: liga tudo + AJUSTES de suavidade
 │   ├── content/            ← ✏️ CONTEÚDO (dá para editar sem saber programar)
 │   │   ├── scenes.js       ← textos dos capítulos e trecho de vídeo de cada um
-│   │   ├── cards.js        ← ficha do carro, grade bento, barra de serviços
-│   │   └── media.js        ← endereços das fotos (Cloudinary)
+│   │   ├── cards.js        ← ficha, grade bento e barra de serviços das cenas
+│   │   ├── gallery.js      ← fotos e legendas do carrossel "Projetos recentes"
+│   │   └── media.js        ← lista das fotos usadas nos cartões
 │   └── modules/            ← ⚙️ LÓGICA (só mexer sabendo o que está fazendo)
 │       ├── scrollScene.js  ← o "motor" de cada cena (junta tudo)
 │       ├── videos.js       ← baixa os vídeos na hora certa e move o vídeo na rolagem
-│       ├── animations.js   ← como textos e cartões aparecem
+│       ├── animations.js   ← como textos e cartões aparecem; trava dos serviços
 │       ├── templates.js    ← monta os textos e cartões na página
+│       ├── gallery.js      ← monta o carrossel "Projetos recentes"
+│       ├── marquee.js      ← faixas que andam sozinhas (logo em loop) e pausa fora da tela
+│       ├── navigation.js   ← botões da barra de serviços e links do menu deslizando
 │       ├── header.js       ← menu do topo
 │       ├── math.js         ← contas do efeito (testadas em tests/)
 │       └── environment.js  ← computador ou celular? animações reduzidas?
+├── images/                 ← fotos (WebP) tiradas do Instagram + logo
+│   ├── logo-lacustom.webp  ← logo oficial em versão clara, fundo transparente
+│   └── galeria/            ← fotos do carrossel (480 x 600)
 ├── videos/                 ← os 4 vídeos do site (já otimizados)
 ├── tests/
 │   └── math.test.js        ← testes automáticos das contas
@@ -110,19 +140,53 @@ Arquivo: **`js/content/scenes.js`**. Cada capítulo tem:
 
 ### Cartões (ficha do carro, grade bento, barra de serviços)
 
-Arquivo: **`js/content/cards.js`**. No final dele, `porCapitulo` define o que aparece em cada capítulo, por exemplo qual bolinha de serviço acende ou qual carro aparece na ficha.
+Arquivo: **`js/content/cards.js`**:
 
-### Textos fixos (menu, "Agende seu orçamento", WhatsApp, endereço, rodapé)
+- **`gradesBento`:** uma grade de 6 blocos para cada capítulo da cena dos boxes (estrutura, PPF e vinil). Assim o conteúdo não se repete de um capítulo para o outro.
+- **`barraDeServicos`:** os botões e o card de serviço que cada um mostra (`cartao` = o `data-servico` do card no `index.html`).
+- **`porCapitulo`:** o que aparece em cada capítulo: qual botão acende, e o título, a foto e os 3 destaques da ficha.
 
-Ficam direto no **`index.html`**.
+### Textos das seções (história, serviços, frase, orçamento), menu e rodapé
 
-### Fotos
+Ficam direto no **`index.html`**. Cada seção começa com um comentário `<!-- ===== NOME ===== -->` para facilitar achar. Elementos com `data-revelar` aparecem subindo quando chegam na tela.
 
-1. Suba a foto no **Cloudinary**, na pasta `la-custom/site`.
-2. Em **`js/content/media.js`**, coloque o nome dela na lista `FOTOS`.
-3. Use essa foto em `js/content/cards.js`.
+**Dicas de copy usadas no site** (para manter o mesmo tom ao escrever textos novos):
 
-As imagens de capa dos vídeos (o `poster`, que aparece enquanto o vídeo carrega) ficam no `index.html`.
+- Fale do **benefício** antes do serviço ("a armadura invisível da sua pintura", não "aplicamos PPF").
+- **Frases curtas.** Uma ideia por frase.
+- **Prova real:** números e fatos verdadeiros (+17 anos, 86 mil seguidores, SEMA Show 2026).
+- **Você, não nós:** o centro da frase é o cliente e o carro dele.
+- **Nada inventado:** se não tiver certeza de um dado, deixe de fora.
+
+### Carrossel "Projetos recentes"
+
+Fotos e legendas em **`js/content/gallery.js`**, divididas em duas faixas. Para incluir uma foto:
+
+1. Salve a foto original em qualquer pasta.
+2. Gere a versão do site (480 x 600, WebP) com o ffmpeg:
+
+   ```bash
+   ffmpeg -i FOTO.jpg -vf "crop=ih*4/5:ih,scale=480:600" -c:v libwebp -quality 76 images/galeria/nome-da-foto.webp
+   ```
+
+3. Acrescente um item na lista de `js/content/gallery.js` (foto, carro, detalhe e descrição).
+
+### Fotos dos cartões e seções
+
+1. Gere a foto em WebP dentro de `images/` (veja o comando acima; para os cards de serviço use 720 x 900).
+2. Coloque o caminho em **`js/content/media.js`** (lista `FOTOS`) ou direto no `index.html`.
+
+Fotos antigas e as capas dos vídeos (o `poster`, que aparece enquanto o vídeo carrega) ficam no **Cloudinary**.
+
+> As fotos vieram do Instagram da própria L.A Custom. Os originais estão em `Documentos\site-lacustom` (OneDrive), junto com as 3 versões da logo.
+
+### Logo
+
+`images/logo-lacustom.webp` é a logo horizontal oficial em versão **clara** (o preto virou branco e o fundo ficou transparente), para combinar com o fundo escuro. Ela foi gerada a partir de `LALOGO2.jpeg`:
+
+```bash
+ffmpeg -i LALOGO2.jpeg -vf "format=rgb24,geq=r='if(lt(abs(r(X,Y)-b(X,Y)),45),255-r(X,Y),r(X,Y))':g='if(lt(abs(r(X,Y)-b(X,Y)),45),255-g(X,Y),g(X,Y))':b='if(lt(abs(r(X,Y)-b(X,Y)),45),255-b(X,Y),b(X,Y))',colorkey=0x000000:0.28:0.12,crop=iw-60:ih-40:30:20,scale=360:-2" -c:v libwebp -quality 90 images/logo-lacustom.webp
+```
 
 ### Vídeos
 
@@ -247,8 +311,14 @@ No topo de **`js/main.js`** fica o bloco `AJUSTES`:
 | `velocidadeDaRoda` | `0.9` | quanto a página anda a cada giro da roda |
 | `atrasoDoVideo` | `0.6` | segundos que o vídeo leva para alcançar a rolagem (movimento macio) |
 | `menorMudancaDoVideo` | `1/48` | o vídeo só muda de quadro se a diferença for maior que isso |
+| `tempoComOsServicosNaTela` | `"+=60%"` | quanto a pessoa rola com os cards de serviço parados na tela |
 
-Para deixar uma cena mais longa ou mais curta, mude `distanciaDeRolagem` dela em `js/content/scenes.js` (ex.: `"+=180%"` = rolar 1,8 vezes a altura da tela).
+Em **`js/content/scenes.js`**, cada cena tem:
+
+- `distanciaDeRolagem`: o tamanho da cena (ex.: `"+=260%"` = rolar 2,6 vezes a altura da tela).
+- `faseDoVideo`: que parte de cada capítulo é do vídeo andando (ex.: `0.5` = metade). **O resto é a pausa em que os textos e cartões ficam parados na tela.** Número menor = cartões na tela por mais tempo.
+
+A velocidade do carrossel fica em `css/sections.css` (`animation: galeria-andar-esquerda 70s`): número maior = mais devagar.
 
 ---
 
@@ -266,12 +336,12 @@ Para deixar uma cena mais longa ou mais curta, mude `distanciaDeRolagem` dela em
 
 ## 10. Pendências
 
-- [ ] **Versão para celular** (hoje bloqueada). Ideia: fotos e um vídeo leve, sem o efeito de rolagem.
-- [ ] **WhatsApp real:** os botões apontam para `https://wa.me/5500000000000`, um número de exemplo.
-- [ ] **Endereço real:** está como "Av. — nº 398".
-- [ ] **Instagram:** o link do rodapé não leva a lugar nenhum (`href="#"`).
-- [ ] **Menu em português:** os itens estão em inglês ("Performance", "Technology"...), e dois deles levam para o mesmo lugar.
+- [ ] **Versão para celular** (hoje bloqueada). As seções novas e o carrossel já se ajustam a telas pequenas; falta liberar e adaptar as cenas de vídeo.
 - [ ] **Vídeos originais:** recodificar a partir dos arquivos gravados, para ganhar qualidade.
+- [ ] **Conferir a copy** da seção "Nossa história" com a equipe (ano de fundação, se quiserem citar).
+- [x] WhatsApp, endereço e Instagram reais (vindos do Linktree oficial).
+- [x] Menu em português.
+- [x] Logo oficial no topo e no rodapé.
 
 ---
 

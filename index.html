@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="L.A Custom — Customização premium automotiva. PPF, envelopamento, film, lavagem detalhada e estética automotiva."
+      content="L.A Custom — studio automotivo em Moema, São Paulo, especializado em proteção e personalização de superesportivos. PPF, películas, envelopamento, detail e coating cerâmico."
     />
-    <title>L.A Custom — Customização Premium</title>
+    <title>L.A Custom — Proteção e Personalização Automotiva</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
@@ -25,6 +26,7 @@
     />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/bento.css" />
+    <link rel="stylesheet" href="css/sections.css" />
     <link rel="stylesheet" href="css/desktop-only.css" />
   </head>
   <body>
@@ -39,38 +41,17 @@
 
     <div class="site-root">
     <header class="header">
-      <a href="#inicio" class="header__logo" aria-label="L.A Custom início">
-        <span class="header__logo-icon" aria-hidden="true">
-          <svg viewBox="0 0 32 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M2 14.5C6 9.5 11 7 16 7s10 2.5 14 7.5"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-            />
-            <path
-              d="M6 14h20"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-            />
-            <circle cx="9" cy="14.5" r="2" stroke="currentColor" stroke-width="1.2" />
-            <circle cx="23" cy="14.5" r="2" stroke="currentColor" stroke-width="1.2" />
-            <path
-              d="M10 7l2-3h8l2 3"
-              stroke="currentColor"
-              stroke-width="1.3"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </span>
+      <!-- Logo oficial (versão clara para o fundo escuro), em images/logo-lacustom.webp -->
+      <a href="#inicio" class="header__logo" aria-label="L.A Custom, voltar ao início">
+        <img class="logo" src="images/logo-lacustom.webp" alt="L.A Custom" width="360" height="78" />
       </a>
 
       <nav class="header__nav" aria-label="Navegação principal">
-        <a href="#servicos" class="header__nav-link">Performance</a>
-        <a href="#servicos" class="header__nav-link">Technology</a>
-        <a href="#sobre" class="header__nav-link">Interior</a>
-        <a href="#contato" class="header__nav-link">Experience</a>
+        <a href="#historia" class="header__nav-link">Nossa história</a>
+        <a href="#estrutura" class="header__nav-link">Estrutura</a>
+        <a href="#servicos" class="header__nav-link">Serviços</a>
+        <a href="#projetos" class="header__nav-link">Projetos</a>
+        <a href="#contato" class="header__nav-link">Orçamento</a>
       </nav>
 
       <button
@@ -87,17 +68,18 @@
 
     <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
       <nav class="mobile-menu__nav" aria-label="Menu mobile">
-        <a href="#inicio" class="mobile-menu__link">Inicio</a>
-        <a href="#servicos" class="mobile-menu__link">Performance</a>
-        <a href="#servicos" class="mobile-menu__link">Technology</a>
-        <a href="#sobre" class="mobile-menu__link">Interior</a>
-        <a href="#contato" class="mobile-menu__link">Experience</a>
+        <a href="#inicio" class="mobile-menu__link">Início</a>
+        <a href="#historia" class="mobile-menu__link">Nossa história</a>
+        <a href="#estrutura" class="mobile-menu__link">Estrutura</a>
+        <a href="#servicos" class="mobile-menu__link">Serviços</a>
+        <a href="#projetos" class="mobile-menu__link">Projetos</a>
+        <a href="#contato" class="mobile-menu__link">Orçamento</a>
         <a
           class="mobile-menu__cta btn btn--primary"
-          href="https://wa.me/5500000000000"
+          href="https://wa.me/5511996741058?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20um%20or%C3%A7amento."
           target="_blank"
           rel="noopener noreferrer"
-          >Orcamento WhatsApp</a
+          >Agendar pelo WhatsApp</a
         >
       </nav>
     </div>
@@ -134,7 +116,55 @@
         </div>
       </section>
 
-      <section class="scene scene--boxes" id="servicos" aria-label="Nossos boxes e serviços">
+      <!-- ===================== NOSSA HISTÓRIA =====================
+           Seção entre a entrada e os boxes. Textos editáveis aqui mesmo.
+           data-revelar = o elemento aparece subindo quando chega na tela. -->
+      <section class="secao secao--historia" id="historia" aria-labelledby="titulo-historia">
+        <div class="secao__conteudo historia" data-revelar-grupo>
+          <div class="historia__texto">
+            <p class="secao__sobretitulo" data-revelar>Nossa história</p>
+            <h2 class="secao__titulo" id="titulo-historia" data-revelar>
+              Mais de 17 anos tratando cada carro como se fosse <em>o nosso</em>.
+            </h2>
+            <p class="secao__texto" data-revelar>
+              A L.A Custom é um studio automotivo em Moema, São Paulo, especializado na proteção e na
+              personalização de superesportivos. De esportivos raros a utilitários do dia a dia, cada
+              carro recebe o mesmo cuidado: técnica, materiais de primeira linha e uma equipe que vive
+              o universo automotivo.
+            </p>
+            <p class="secao__texto" data-revelar>
+              E a gente vai atrás do que há de mais novo: em 2026 estivemos no SEMA Show, em Las Vegas,
+              a maior feira de customização automotiva do mundo, para trazer tendências e técnicas
+              direto para a nossa oficina.
+            </p>
+            <ul class="historia__numeros" data-revelar>
+              <li><strong>+17</strong><span>anos de mercado</span></li>
+              <li><strong>86 mil</strong><span>pessoas acompanham nosso trabalho</span></li>
+              <li><strong>2.500+</strong><span>publicações de projetos e bastidores</span></li>
+            </ul>
+          </div>
+
+          <figure class="cartao-foto historia__foto" data-revelar>
+            <img
+              src="images/equipe-renato-garcia.webp"
+              alt="Equipe da L.A Custom reunida na oficina, sob a iluminação hexagonal, com o Renato Garcia"
+              width="1400"
+              height="933"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption class="cartao-foto__legenda">
+              <strong>A equipe por trás de cada entrega</strong>
+              Fim do projeto do Porsche GT3 RS do Renato Garcia. Foto: @_gravalos
+            </figcaption>
+          </figure>
+        </div>
+
+        <!-- Faixa com a logo passando em loop: disfarça a troca para a próxima cena -->
+        <div class="faixa-logos" data-faixa-logos aria-hidden="true"></div>
+      </section>
+
+      <section class="scene scene--boxes" id="estrutura" aria-label="Nossa estrutura: boxes, PPF e envelopamento">
         <div class="scene__sticky">
           <div class="scene__blend scene__blend--enter" aria-hidden="true"></div>
           <video
@@ -152,7 +182,145 @@
         </div>
       </section>
 
-      <section class="scene scene--wash" id="sobre" aria-label="Nosso trabalho em ação">
+      <!-- ===================== SERVIÇOS =====================
+           5 cards com foto. Ao passar o mouse, a foto aproxima e o card
+           mostra o texto completo (o visual fica em css/sections.css).
+           Os botões da barra de serviços (PPF, Vinil...) trazem a pessoa
+           até aqui e acendem o card pelo data-servico. -->
+      <section class="secao secao--servicos" id="servicos" aria-labelledby="titulo-servicos">
+        <div class="secao__conteudo" data-revelar-grupo>
+          <header class="secao__cabecalho">
+            <p class="secao__sobretitulo" data-revelar>O que fazemos</p>
+            <h2 class="secao__titulo" id="titulo-servicos" data-revelar>
+              Tudo o que o seu carro precisa, <em>em um só lugar</em>.
+            </h2>
+            <p class="secao__texto" data-revelar>Passe o mouse nos cards para conhecer cada serviço.</p>
+          </header>
+
+          <div class="servicos__grade">
+            <div class="servicos__item" data-revelar>
+              <article class="cartao-servico" tabindex="0" data-servico="ppf">
+                <img
+                  src="images/ppf-equipe.webp"
+                  alt="Equipe da L.A Custom aplicando PPF em um Porsche preto"
+                  width="720"
+                  height="900"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div class="cartao-servico__conteudo">
+                  <span class="cartao-servico__numero">01</span>
+                  <h3 class="cartao-servico__titulo">PPF</h3>
+                  <p class="cartao-servico__resumo">A armadura invisível da sua pintura.</p>
+                  <p class="cartao-servico__detalhe">
+                    Película transparente que encara pedriscos, riscos e a sujeira do dia a dia no lugar
+                    da pintura. A água escorre, a cor original fica preservada e o carro vale mais na
+                    hora de vender.
+                  </p>
+                </div>
+              </article>
+            </div>
+
+            <div class="servicos__item" data-revelar>
+              <article class="cartao-servico" tabindex="0" data-servico="peliculas">
+                <img
+                  src="images/peliculas-f150.webp"
+                  alt="Ford F-150 cinza com películas nos vidros, na oficina da L.A Custom"
+                  width="720"
+                  height="900"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div class="cartao-servico__conteudo">
+                  <span class="cartao-servico__numero">02</span>
+                  <h3 class="cartao-servico__titulo">Películas</h3>
+                  <p class="cartao-servico__resumo">Cabine fresca, visual impecável.</p>
+                  <p class="cartao-servico__detalhe">
+                    Películas de alta performance que barram calor e raios UV, deixam a viagem mais
+                    confortável e garantem privacidade, sempre dentro do que a lei permite.
+                  </p>
+                </div>
+              </article>
+            </div>
+
+            <div class="servicos__item" data-revelar>
+              <article class="cartao-servico" tabindex="0" data-servico="envelopamento">
+                <img
+                  src="images/envelopamento-gt3.webp"
+                  alt="Porsche 911 GT3 RS azul com capô preto, personalizado pela L.A Custom"
+                  width="720"
+                  height="900"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div class="cartao-servico__conteudo">
+                  <span class="cartao-servico__numero">03</span>
+                  <h3 class="cartao-servico__titulo">Envelopamento e custom</h3>
+                  <p class="cartao-servico__resumo">Mude tudo. Menos a pintura original.</p>
+                  <p class="cartao-servico__detalhe">
+                    Vinil de alta performance para trocar a cor, criar detalhes em preto, fosco ou
+                    acetinado e deixar o carro com a sua cara. Reversível e seguro para a pintura.
+                  </p>
+                </div>
+              </article>
+            </div>
+
+            <div class="servicos__item" data-revelar>
+              <article class="cartao-servico" tabindex="0" data-servico="lavagem">
+                <img
+                  src="images/lavagem-tecnica.webp"
+                  alt="BMW M3 amarelo coberto de espuma durante a lavagem técnica"
+                  width="720"
+                  height="900"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div class="cartao-servico__conteudo">
+                  <span class="cartao-servico__numero">04</span>
+                  <h3 class="cartao-servico__titulo">Lavagem técnica</h3>
+                  <p class="cartao-servico__resumo">Limpo de verdade, sem um risco.</p>
+                  <p class="cartao-servico__detalhe">
+                    Pré-lavagem com espuma para soltar a sujeira sem atrito, cuidado com rodas, frisos
+                    e vãos, e secagem que não deixa marcas na pintura.
+                  </p>
+                </div>
+              </article>
+            </div>
+
+            <div class="servicos__item" data-revelar>
+              <article class="cartao-servico" tabindex="0" data-servico="detail">
+                <img
+                  src="images/coating-ceramico.webp"
+                  alt="Frasco de coating cerâmico sobre toalha de microfibra amarela"
+                  width="720"
+                  height="900"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div class="cartao-servico__conteudo">
+                  <span class="cartao-servico__numero">05</span>
+                  <h3 class="cartao-servico__titulo">Detail e coating</h3>
+                  <p class="cartao-servico__resumo">Brilho de carro novo que dura.</p>
+                  <p class="cartao-servico__detalhe">
+                    Correção de pintura que apaga marcas e coating cerâmico de primeira linha. A
+                    sujeira gruda menos, lavar fica mais fácil e o brilho dura muito mais.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <p class="servicos__extra" data-revelar>
+            Também cuidamos da sua casa: o <strong>PPF residencial</strong> protege mármores e
+            superfícies nobres do desgaste. Conheça a
+            <a href="https://www.instagram.com/lahouse.br/" target="_blank" rel="noopener noreferrer">L.A House</a>.
+          </p>
+        </div>
+
+        <div class="faixa-logos" data-faixa-logos aria-hidden="true"></div>
+      </section>
+
+      <section class="scene scene--wash" id="padrao" aria-label="Padrão L.A Custom: lavagem técnica">
         <div class="scene__sticky">
           <div class="scene__blend scene__blend--enter" aria-hidden="true"></div>
           <video
@@ -169,6 +337,21 @@
           <div class="scene__overlay scene__overlay--dark"></div>
           <div class="scene__blend scene__blend--exit" aria-hidden="true"></div>
         </div>
+      </section>
+
+      <!-- ===================== FRASE (transição) =====================
+           Respiro entre a lavagem e a correção de pintura, com a frase da marca. -->
+      <section class="secao secao--frase" aria-label="Frase da L.A Custom">
+        <div class="secao__conteudo" data-revelar-grupo>
+          <blockquote class="frase" data-revelar>
+            Seu carro é a extensão de <em>quem você é</em>.
+          </blockquote>
+          <p class="frase__apoio" data-revelar>
+            Por isso nenhum carro sai daqui antes de estar do jeito que você imaginou.
+          </p>
+        </div>
+
+        <div class="faixa-logos" data-faixa-logos aria-hidden="true"></div>
       </section>
 
       <section class="scene scene--detail" id="detalhamento" aria-label="Correção de pintura">
@@ -189,22 +372,57 @@
         </div>
       </section>
 
-      <section class="cta-section" id="contato">
-        <div class="cta-section__inner">
-          <p class="eyebrow eyebrow--light">Pronto para transformar seu veículo?</p>
-          <h2 class="cta-section__title">Agende seu orçamento</h2>
-          <p class="cta-section__text">
-            Av. — nº 398 — Atendimento premium para veículos de alto padrão.
+      <!-- ===================== PROJETOS RECENTES (carrossel) =====================
+           As fotos e legendas ficam em js/content/gallery.js; o código monta as
+           duas faixas aqui dentro (data-galeria). -->
+      <section class="secao secao--projetos" id="projetos" aria-labelledby="titulo-projetos">
+        <div class="secao__conteudo" data-revelar-grupo>
+          <p class="secao__sobretitulo" data-revelar>Projetos recentes</p>
+          <h2 class="secao__titulo" id="titulo-projetos" data-revelar>
+            Cada carro conta uma história. <em>Estas saíram daqui.</em>
+          </h2>
+          <p class="secao__texto" data-revelar>
+            Passe o mouse em uma foto para ver o projeto. Tem muito mais no nosso
+            <a class="link-dourado" href="https://www.instagram.com/l.acustom/" target="_blank" rel="noopener noreferrer">Instagram</a>.
           </p>
-          <div class="cta-section__actions">
+        </div>
+        <div class="galeria" data-galeria></div>
+      </section>
+
+      <!-- ===================== ORÇAMENTO =====================
+           WhatsApp e endereço oficiais, tirados do linktr.ee/lacustom (link da bio do Instagram).
+           O link do WhatsApp já abre com uma mensagem pronta ("text=..."). -->
+      <section class="cta-section" id="contato">
+        <div class="cta-section__inner" data-revelar-grupo>
+          <p class="eyebrow eyebrow--light" data-revelar>Seu carro merece esse cuidado</p>
+          <h2 class="cta-section__title" data-revelar>Peça seu orçamento</h2>
+          <p class="cta-section__text" data-revelar>
+            Conte qual é o carro e o que você quer fazer. A nossa equipe responde com um orçamento
+            sob medida, sem compromisso.
+          </p>
+          <p class="cta-section__endereco" data-revelar>
             <a
-              class="btn btn--primary"
-              href="https://wa.me/5500000000000"
+              href="https://www.google.com/maps/search/?api=1&amp;query=Av.%20dos%20Imar%C3%A9s%2C%20398%20-%20Moema%2C%20S%C3%A3o%20Paulo"
               target="_blank"
               rel="noopener noreferrer"
-              >Falar no WhatsApp</a
+              >Av. dos Imarés, 398 · Moema, São Paulo</a
             >
-            <a class="btn btn--ghost" href="#inicio">Voltar ao topo</a>
+          </p>
+          <div class="cta-section__actions" data-revelar>
+            <a
+              class="btn btn--primary"
+              href="https://wa.me/5511996741058?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20um%20or%C3%A7amento."
+              target="_blank"
+              rel="noopener noreferrer"
+              >Agendar pelo WhatsApp</a
+            >
+            <a
+              class="btn btn--ghost"
+              href="https://www.instagram.com/l.acustom/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Ver trabalhos no Instagram</a
+            >
           </div>
         </div>
       </section>
@@ -212,13 +430,13 @@
 
     <footer class="footer">
       <div class="footer__brand">
-        <span class="header__logo-mark">A</span>
-        <span>L.A CUSTOM</span>
+        <img class="logo logo--rodape" src="images/logo-lacustom.webp" alt="L.A Custom" width="360" height="78" loading="lazy" />
       </div>
       <p class="footer__copy">© 2026 L.A Custom. Todos os direitos reservados.</p>
       <div class="footer__links">
-        <a href="#">Instagram</a>
-        <a href="#contato">Contato</a>
+        <a href="https://www.instagram.com/l.acustom/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://wa.me/5511996741058" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <a href="https://g.page/r/CQq8jrJz9e56EAE/review" target="_blank" rel="noopener noreferrer">Avalie no Google</a>
       </div>
     </footer>
     </div>
@@ -240,6 +458,10 @@
     <link rel="modulepreload" href="js/modules/animations.js" />
     <link rel="modulepreload" href="js/modules/scrollScene.js" />
     <link rel="modulepreload" href="js/modules/header.js" />
+    <link rel="modulepreload" href="js/content/gallery.js" />
+    <link rel="modulepreload" href="js/modules/gallery.js" />
+    <link rel="modulepreload" href="js/modules/marquee.js" />
+    <link rel="modulepreload" href="js/modules/navigation.js" />
     <script type="module" src="js/main.js"></script>
   </body>
 </html>

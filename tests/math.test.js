@@ -15,6 +15,7 @@ import {
   converterFaixa,
   calcularEstadoDoCapitulo,
   calcularSegundoDoVideo,
+  calcularProgressoParaVerCapitulo,
 } from "../js/modules/math.js";
 
 // Dois capítulos do mesmo tamanho: o 1º mostra a 1ª metade do vídeo, o 2º a 2ª metade.
@@ -77,4 +78,29 @@ test("calcularSegundoDoVideo acha o segundo certo dentro do trecho", () => {
   // Vídeo de 10s, trecho de 20% a 60%, metade do trecho → 40% do vídeo → 4s
   const segundo = calcularSegundoDoVideo(10, { inicioDoVideo: 0.2, fimDoVideo: 0.6 }, 0.5);
   assert.ok(Math.abs(segundo - 4) < 1e-9);
+});
+
+test("calcularProgressoParaVerCapitulo aponta para o meio da pausa de cada capítulo", () => {
+  // 2 capítulos iguais, fase 0,5: pausa do 1º vai de 0,25 a 0,5 → meio = 0,375
+  assert.ok(Math.abs(calcularProgressoParaVerCapitulo(DOIS_CAPITULOS, 0, 0.5) - 0.375) < 1e-9);
+  // pausa do 2º vai de 0,75 a 1 → meio = 0,875
+  assert.ok(Math.abs(calcularProgressoParaVerCapitulo(DOIS_CAPITULOS, 1, 0.5) - 0.875) < 1e-9);
+});
+
+test("no ponto indicado pelo botão, o capítulo está em pausa com o texto inteiro", () => {
+  const progresso = calcularProgressoParaVerCapitulo(DOIS_CAPITULOS, 1, 0.5);
+  const estado = calcularEstadoDoCapitulo(progresso, DOIS_CAPITULOS, 0.5);
+
+  assert.equal(estado.indiceDoCapitulo, 1);
+  assert.equal(estado.emPausa, true);
+  assert.equal(estado.revelacaoDoTexto, 1);
+});
+
+test("um capítulo pode ter a própria fase do vídeo (pausa mais curta)", () => {
+  const capitulos = [{ peso: 1, faseDoVideo: 0.8 }, { peso: 1 }];
+
+  // No 1º capítulo, com 70% rolado, o vídeo ainda anda (fase própria 0,8)
+  assert.equal(calcularEstadoDoCapitulo(0.35, capitulos, 0.5).emPausa, false);
+  // No 2º, vale a fase da cena (0,5): com 70% do capítulo rolado, já está em pausa
+  assert.equal(calcularEstadoDoCapitulo(0.85, capitulos, 0.5).emPausa, true);
 });

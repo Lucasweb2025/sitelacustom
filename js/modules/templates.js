@@ -2,7 +2,7 @@
  * ============================================================
  *  MONTAGEM DOS TEXTOS E CARTÕES NA PÁGINA
  * ============================================================
- *  Os títulos e cartões não estão escritos no index.html: eles são
+ *  Os títulos e cartões das cenas não estão escritos no index.html: eles são
  *  montados aqui, a partir do conteúdo de js/content/. Assim, para
  *  trocar um texto, basta mexer no conteúdo, sem tocar no HTML.
  *
@@ -90,70 +90,90 @@ function montarBlocoDoBento(bloco, posicao) {
       </article>`;
   }
 
+  // Foto com legenda: a legenda aparece ao passar o mouse (veja css/sections.css)
+  const legenda = bloco.legenda
+    ? `<span class="bento-cell__legenda">${protegerTexto(bloco.legenda)}</span>`
+    : "";
+
   return `
     <article class="bento-cell bento-cell--image" data-bento-index="${posicao}">
-      <img src="${protegerTexto(bloco.foto)}" alt="${protegerTexto(bloco.descricao || "")}" loading="lazy" />
+      <img src="${protegerTexto(bloco.foto)}" alt="${protegerTexto(bloco.descricao || "")}" loading="lazy" decoding="async" />
+      ${legenda}
     </article>`;
 }
 
-/** Monta a ficha do carro (foto + 3 números). */
-function montarFichaDoCarro() {
-  const ficha = CARTOES.fichaDoCarro;
+/** Monta um destaque da ficha (valor grande + rótulo pequeno). */
+export function montarDestaqueDaFicha(destaque) {
+  return `
+    <div class="glass-stat">
+      <strong class="glass-stat__value">${protegerTexto(destaque.valor)}</strong>
+      <span class="glass-stat__label">${protegerTexto(destaque.rotulo)}</span>
+    </div>`;
+}
 
-  const numeros = ficha.numeros
-    .map(
-      (item) => `
-        <div class="glass-stat">
-          <strong class="glass-stat__value">${protegerTexto(item.valor)}</strong>
-          <span class="glass-stat__label">${protegerTexto(item.rotulo)}</span>
-        </div>`
-    )
-    .join("");
+/** Monta a ficha (título, foto e 3 destaques). */
+function montarFicha() {
+  const ficha = CARTOES.ficha;
 
   return `
     <div class="glass-stats" aria-hidden="true">
       <div class="glass-stats__label">
         <span class="glass-stats__mark">A</span>
-        <span class="glass-stats__name">${protegerTexto(ficha.nomeDoVeiculo)}</span>
+        <span class="glass-stats__name">${protegerTexto(ficha.titulo)}</span>
       </div>
       <div class="glass-stats__grid">
         <div class="glass-stat glass-stat--thumb">
-          <img src="${protegerTexto(ficha.foto)}" alt="" loading="lazy" />
+          <img src="${protegerTexto(ficha.foto)}" alt="" loading="lazy" decoding="async" />
         </div>
-        ${numeros}
+        <div class="glass-stats__destaques">${ficha.destaques.map(montarDestaqueDaFicha).join("")}</div>
       </div>
     </div>`;
 }
 
-/** Monta a barra de bolinhas de serviços (PPF, WRAP...). */
+/**
+ * Monta a barra de serviços (PPF, Vinil, Película...).
+ * Cada item é um botão; o clique é ligado em js/modules/navigation.js.
+ */
 function montarBarraDeServicos() {
-  const bolinhas = CARTOES.barraDeServicos
+  const botoes = CARTOES.barraDeServicos
     .map(
-      (nome, posicao) =>
-        `<span class="service-dock__item" data-dock-index="${posicao}">${protegerTexto(nome)}</span>`
+      (servico, posicao) =>
+        `<button type="button" class="service-dock__item" data-dock-index="${posicao}">${protegerTexto(servico.rotulo)}</button>`
     )
     .join("");
 
-  return `<div class="service-dock" aria-hidden="true">${bolinhas}</div>`;
+  return `<nav class="service-dock" aria-label="Ir para um serviço">${botoes}</nav>`;
+}
+
+/**
+ * Monta uma grade bento para cada capítulo que tiver uma
+ * (veja "gradesBento" em js/content/cards.js).
+ */
+function montarGradesBento(capitulos) {
+  return capitulos
+    .filter((capitulo) => CARTOES.gradesBento[capitulo.id])
+    .map(
+      (capitulo) => `
+        <div class="bento-grid" data-capitulo="${protegerTexto(capitulo.id)}" aria-hidden="true">
+          ${CARTOES.gradesBento[capitulo.id].map(montarBlocoDoBento).join("")}
+        </div>`
+    )
+    .join("");
 }
 
 /**
  * Coloca na cena os cartões que ficam por cima do vídeo:
- * barra de serviços, ficha do carro e (só na cena dos boxes) a grade bento.
+ * barra de serviços, ficha e (só na cena dos boxes) as grades bento.
  */
-export function colocarCartoesNaCena(secao, temGradeBento) {
+export function colocarCartoesNaCena(secao, temGradeBento, capitulos) {
   const areaFixa = secao.querySelector(".scene__sticky");
   if (!areaFixa || areaFixa.querySelector(".scene-cards")) return; // já foram colocados
 
-  const gradeBento = temGradeBento
-    ? `<div class="bento-grid" aria-hidden="true">
-        ${CARTOES.gradeBento.map(montarBlocoDoBento).join("")}
-      </div>`
-    : "";
+  const gradeBento = temGradeBento ? montarGradesBento(capitulos) : "";
 
   const camadaDeCartoes = document.createElement("div");
   camadaDeCartoes.className = "scene-cards";
-  camadaDeCartoes.innerHTML = montarBarraDeServicos() + montarFichaDoCarro() + gradeBento;
+  camadaDeCartoes.innerHTML = montarBarraDeServicos() + montarFicha() + gradeBento;
 
   areaFixa.appendChild(camadaDeCartoes);
 }

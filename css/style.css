@@ -75,18 +75,6 @@ video {
   color: var(--text);
 }
 
-.header__logo-icon {
-  display: block;
-  width: 2rem;
-  height: auto;
-  opacity: 0.92;
-}
-
-.header__logo-icon svg {
-  width: 100%;
-  height: auto;
-}
-
 .header__nav {
   display: flex;
   align-items: center;
@@ -193,17 +181,6 @@ video {
   display: none;
 }
 
-.header__logo-mark {
-  display: grid;
-  place-items: center;
-  width: 2rem;
-  height: 2rem;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-
 /* Responsive */
 @media (max-width: 900px) {
   .header {
@@ -225,12 +202,13 @@ video {
   }
 }
 
-/* Scenes */
+/* Cenas: cada uma tem exatamente a altura da tela. Quem "segura" a cena
+   enquanto a pessoa rola é o ScrollTrigger (pin), no JavaScript.
+   (Antes eram 200vh, e o vídeo "sobrava" na tela depois da cena: o Mustang
+   e a correção de pintura apareciam duas vezes.) */
 .scene {
   position: relative;
-  height: 200vh;
-  content-visibility: auto;
-  contain-intrinsic-size: auto 200vh;
+  height: 100vh;
 }
 
 .scene--entrance {
@@ -239,13 +217,10 @@ video {
 
 .scene--boxes {
   z-index: 2;
-  margin-top: -18vh;
 }
 
 .scene--wash {
   z-index: 1;
-  margin-top: -18vh;
-  height: 140vh;
 }
 
 .scene__sticky {
@@ -399,16 +374,20 @@ video {
   pointer-events: none;
 }
 
+/* Bloco de texto grande de cada capítulo. Fica acima da barra de botões.
+   O painel aparece quando fica ativo; cada parte dele (número, título,
+   frase) é animada pelo JavaScript. */
 .chapter-panel {
   position: absolute;
   left: clamp(1.25rem, 5vw, 4rem);
-  bottom: clamp(3rem, 10vh, 5rem);
+  bottom: clamp(6rem, 15vh, 8rem);
   max-width: min(36rem, calc(100% - 2.5rem));
   opacity: 0;
   visibility: hidden;
 }
 
 .chapter-panel.is-active {
+  opacity: 1; /* faltava esta linha: os títulos nunca apareciam */
   visibility: visible;
 }
 
@@ -464,7 +443,7 @@ video {
 .scene--boxes .chapter-panel {
   left: clamp(1.25rem, 5vw, 4rem);
   right: auto;
-  bottom: clamp(3rem, 10vh, 5rem);
+  bottom: clamp(6rem, 15vh, 8rem);
   top: auto;
   max-width: min(30rem, calc(100% - 2rem));
   transform: none;
@@ -712,19 +691,6 @@ video {
 
 /* Responsive scenes & footer */
 @media (max-width: 767px) {
-  .scene {
-    height: 220vh;
-  }
-
-  .scene--boxes,
-  .scene--wash {
-    margin-top: -12vh;
-  }
-
-  .scene--wash {
-    height: 160vh;
-  }
-
   .scene__blend--exit {
     height: 34vh;
   }

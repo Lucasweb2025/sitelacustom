@@ -8,7 +8,7 @@
  */
 
 // ids das seções do index.html que têm link no menu
-const SECOES_DO_MENU = ["inicio", "servicos", "sobre", "contato"];
+const SECOES_DO_MENU = ["inicio", "historia", "estrutura", "servicos", "detalhamento", "projetos", "contato"];
 
 export function iniciarMenuDoTopo() {
   const botaoDoMenu = document.querySelector(".header__menu");

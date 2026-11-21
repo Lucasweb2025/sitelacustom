@@ -1,0 +1,854 @@
+/*
+ * ============================================================
+ *  SEÇÕES ENTRE AS CENAS + EFEITOS AO PASSAR O MOUSE
+ * ============================================================
+ *  - Nossa história (#historia)
+ *  - Serviços, com os 4 cards de foto (#servicos)
+ *  - Frase da marca (entre a lavagem e a correção de pintura)
+ *  - Efeito de passar o mouse nas fotos da grade bento e da ficha
+ *  - Barra de serviços com nomes em português
+ *
+ *  As cores e a curva de animação (--ease) vêm de css/style.css.
+ * ============================================================
+ */
+
+/* ---------- Base das seções ---------- */
+
+.secao {
+  position: relative;
+  z-index: 5; /* fica por cima das cenas, para o degradê cobrir a emenda */
+  padding: clamp(6rem, 14vh, 10rem) clamp(1.25rem, 5vw, 4rem);
+  background: var(--bg);
+}
+
+/* Transição em degradê: a seção "derrete" para dentro do vídeo de cima e
+   do vídeo de baixo, em vez de um corte seco entre preto e vídeo. */
+.secao::before,
+.secao::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 30vh;
+  pointer-events: none;
+}
+
+.secao::before {
+  top: 0;
+  transform: translateY(-100%);
+  background: linear-gradient(to bottom, transparent, rgba(8, 8, 9, 0.6) 55%, var(--bg));
+}
+
+.secao::after {
+  bottom: 0;
+  transform: translateY(100%);
+  background: linear-gradient(to top, transparent, rgba(8, 8, 9, 0.6) 45%, var(--bg));
+}
+
+.secao__conteudo {
+  max-width: 76rem;
+  margin: 0 auto;
+}
+
+.secao__sobretitulo {
+  margin: 0 0 1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.secao__titulo {
+  margin: 0 0 1.5rem;
+  max-width: 22ch;
+  font-size: clamp(2.2rem, 4.4vw, 3.6rem);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+}
+
+/* Palavras em destaque nos títulos: dourado, sem itálico */
+.secao__titulo em,
+.frase em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.secao__texto {
+  margin: 0 0 1.1rem;
+  max-width: 34rem;
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* ---------- Nossa história ---------- */
+
+.historia {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: clamp(2.5rem, 6vw, 5.5rem);
+  align-items: center;
+}
+
+.historia__numeros {
+  display: flex;
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  margin: 2.25rem 0 0;
+  padding: 1.75rem 0 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.historia__numeros strong {
+  display: block;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.historia__numeros span {
+  display: block;
+  max-width: 11rem;
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+/* ---------- Cartão de foto (usado na história) ---------- */
+
+.cartao-foto {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 1.1rem;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  transition:
+    border-color 0.5s var(--ease),
+    box-shadow 0.5s var(--ease);
+}
+
+.cartao-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition:
+    transform 1.2s var(--ease),
+    filter 0.6s var(--ease);
+  filter: brightness(0.9);
+}
+
+.cartao-foto__legenda {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 3.5rem 1.5rem 1.35rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--muted);
+  background: linear-gradient(to top, rgba(8, 8, 9, 0.92), transparent);
+  transform: translateY(35%);
+  opacity: 0.85;
+  transition:
+    transform 0.6s var(--ease),
+    opacity 0.6s var(--ease);
+}
+
+.cartao-foto__legenda strong {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-size: 1.05rem;
+  color: var(--text);
+}
+
+/* Ao passar o mouse: a foto aproxima e clareia, a legenda sobe */
+.cartao-foto:hover {
+  border-color: rgba(201, 169, 110, 0.45);
+  box-shadow: 0 30px 90px rgba(201, 169, 110, 0.14);
+}
+
+.cartao-foto:hover img {
+  transform: scale(1.06);
+  filter: brightness(1.02);
+}
+
+.cartao-foto:hover .cartao-foto__legenda {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ---------- Serviços (4 cards com foto) ---------- */
+
+.secao__cabecalho {
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.servicos__grade {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 serviços = 5 botões da barra */
+  gap: 1rem;
+}
+
+/* Cada card fica dentro de uma "moldura" (.servicos__item): a moldura faz a
+   animação de entrada e o card faz o efeito do mouse. Se os dois efeitos
+   mexessem no mesmo elemento, eles brigariam e o card ficaria invisível. */
+.cartao-servico {
+  position: relative;
+  aspect-ratio: 4 / 5.4;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--surface);
+  cursor: default;
+  outline: none;
+  transition:
+    transform 0.6s var(--ease),
+    border-color 0.5s var(--ease),
+    box-shadow 0.6s var(--ease),
+    opacity 0.5s var(--ease),
+    filter 0.5s var(--ease);
+}
+
+.cartao-servico img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.78) saturate(1.05);
+  transition:
+    transform 1.2s var(--ease),
+    filter 0.6s var(--ease);
+}
+
+/* Escurecimento de baixo para cima, para o texto ficar legível */
+.cartao-servico::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(8, 8, 9, 0.96) 8%, rgba(8, 8, 9, 0.35) 55%, transparent 80%);
+  transition: background 0.6s var(--ease);
+}
+
+.cartao-servico__conteudo {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  padding: 1.4rem 1.35rem 1.5rem;
+}
+
+.cartao-servico__numero {
+  display: block;
+  margin-bottom: 0.6rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+}
+
+.cartao-servico__titulo {
+  margin: 0 0 0.35rem;
+  font-size: clamp(1.2rem, 1.7vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.cartao-servico__resumo {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(245, 245, 247, 0.85);
+}
+
+/* Texto completo: escondido, aparece ao passar o mouse */
+.cartao-servico__detalhe {
+  max-height: 0;
+  margin: 0;
+  overflow: hidden;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--muted);
+  opacity: 0;
+  transition:
+    max-height 0.7s var(--ease),
+    margin 0.7s var(--ease),
+    opacity 0.5s var(--ease);
+}
+
+/* Ao passar o mouse (ou focar com o teclado): o card sobe, ganha borda dourada,
+   a foto aproxima e o texto completo aparece */
+.cartao-servico:hover,
+.cartao-servico:focus-visible {
+  transform: translateY(-8px);
+  border-color: rgba(201, 169, 110, 0.55);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(201, 169, 110, 0.18);
+}
+
+.cartao-servico:hover img,
+.cartao-servico:focus-visible img {
+  transform: scale(1.08);
+  filter: brightness(0.6) saturate(1.1);
+}
+
+.cartao-servico:hover::after,
+.cartao-servico:focus-visible::after {
+  background: linear-gradient(to top, rgba(8, 8, 9, 0.97) 25%, rgba(8, 8, 9, 0.55) 70%, rgba(8, 8, 9, 0.2));
+}
+
+.cartao-servico:hover .cartao-servico__detalhe,
+.cartao-servico:focus-visible .cartao-servico__detalhe {
+  max-height: 10rem;
+  margin-top: 0.85rem;
+  opacity: 1;
+}
+
+/* Os outros cards ficam mais apagados, para o da vez chamar atenção */
+.servicos__grade:hover .cartao-servico:not(:hover) {
+  opacity: 0.55;
+  filter: grayscale(0.35);
+}
+
+.servicos__extra {
+  margin: 2.5rem 0 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.servicos__extra a {
+  color: var(--accent);
+  border-bottom: 1px solid rgba(201, 169, 110, 0.4);
+  transition: border-color 0.3s var(--ease);
+}
+
+.servicos__extra a:hover {
+  border-color: var(--accent);
+}
+
+/* ---------- Frase da marca (transição entre cenas) ---------- */
+
+.secao--frase {
+  padding: clamp(8rem, 22vh, 14rem) clamp(1.25rem, 5vw, 4rem);
+  text-align: center;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 50%, rgba(201, 169, 110, 0.08), transparent 70%),
+    var(--bg);
+}
+
+.frase {
+  max-width: 18ch;
+  margin: 0 auto;
+  font-size: clamp(2.4rem, 5.6vw, 4.8rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+
+.frase__apoio {
+  max-width: 30rem;
+  margin: 1.75rem auto 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* ---------- Projetos recentes (carrossel que anda sozinho) ---------- */
+
+.secao--projetos {
+  padding-bottom: clamp(5rem, 12vh, 8rem);
+  overflow-x: clip; /* as faixas passam da largura da tela (sem cortar o degradê de cima) */
+}
+
+/* Depois dos projetos vem o orçamento, que já é escuro: sem degradê embaixo */
+.secao--projetos::after {
+  display: none;
+}
+
+/* ---------- Faixa com a logo em loop (na emenda entre seção e cena) ---------- */
+
+.faixa-logos {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  transform: translateY(50%); /* metade na seção, metade no vídeo: cobre a emenda */
+  overflow: hidden;
+  padding: 1.1rem 0;
+  border-top: 1px solid rgba(201, 169, 110, 0.22);
+  border-bottom: 1px solid rgba(201, 169, 110, 0.22);
+  background: rgba(8, 8, 9, 0.92);
+  mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+}
+
+.faixa-logos__trilho {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  width: max-content;
+  animation: faixa-andar 45s linear infinite;
+  animation-play-state: paused;
+}
+
+/* Anda até a metade (onde começa a cópia; 1,5rem = metade do espaço entre itens) */
+@keyframes faixa-andar {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - 1.5rem));
+  }
+}
+
+.faixa-logos--em-movimento .faixa-logos__trilho {
+  animation-play-state: running;
+}
+
+.faixa-logos__item img {
+  display: block;
+  width: auto;
+  height: 1.35rem;
+  opacity: 0.75;
+}
+
+.faixa-logos__separador {
+  font-size: 0.55rem;
+  color: var(--accent);
+  opacity: 0.8;
+}
+
+/* O bloco de orçamento "sobe" um pouco sobre o que vem antes;
+   depois de uma seção ele não sobe, para não cobrir a galeria. */
+.secao + .cta-section {
+  margin-top: 0;
+}
+
+.cta-section__endereco {
+  margin: 1rem 0 0;
+  font-size: 0.95rem;
+}
+
+.cta-section__endereco a {
+  color: var(--accent);
+  border-bottom: 1px solid rgba(201, 169, 110, 0.4);
+  transition: border-color 0.3s var(--ease);
+}
+
+.cta-section__endereco a:hover {
+  border-color: var(--accent);
+}
+
+.link-dourado {
+  color: var(--accent);
+  border-bottom: 1px solid rgba(201, 169, 110, 0.4);
+  transition: border-color 0.3s var(--ease);
+}
+
+.link-dourado:hover {
+  border-color: var(--accent);
+}
+
+.galeria {
+  display: grid;
+  gap: 1rem;
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  /* As pontas da galeria somem num degradê, em vez de um corte seco */
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.galeria__faixa {
+  overflow: hidden;
+}
+
+/* O trilho leva as fotos (e a cópia delas) e anda de lado sem parar */
+.galeria__trilho {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: galeria-andar-esquerda 70s linear infinite;
+  animation-play-state: paused; /* só anda quando a galeria está na tela */
+}
+
+.galeria__faixa--direita .galeria__trilho {
+  animation-name: galeria-andar-direita;
+  animation-duration: 80s;
+}
+
+.galeria--em-movimento .galeria__trilho {
+  animation-play-state: running;
+}
+
+/* Mouse em cima de uma faixa: ela para, para a pessoa ver a foto */
+.galeria--em-movimento .galeria__faixa:hover .galeria__trilho {
+  animation-play-state: paused;
+}
+
+/* Anda até a metade (onde começa a cópia) e recomeça: parece infinito */
+@keyframes galeria-andar-esquerda {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - 0.5rem));
+  }
+}
+
+@keyframes galeria-andar-direita {
+  from {
+    transform: translateX(calc(-50% - 0.5rem));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.galeria__foto {
+  position: relative;
+  flex: none;
+  width: clamp(13rem, 19vw, 17rem);
+  aspect-ratio: 4 / 5;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 0.9rem;
+  background: var(--surface);
+  transition:
+    border-color 0.5s var(--ease),
+    opacity 0.5s var(--ease),
+    filter 0.5s var(--ease);
+}
+
+.galeria__foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.85);
+  transition:
+    transform 1s var(--ease),
+    filter 0.6s var(--ease);
+}
+
+.galeria__legenda {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 3rem 1rem 1rem;
+  background: linear-gradient(to top, rgba(8, 8, 9, 0.92), transparent);
+  transform: translateY(100%);
+  transition: transform 0.55s var(--ease);
+}
+
+.galeria__legenda strong {
+  display: block;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.galeria__legenda span {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.78rem;
+  color: var(--accent);
+}
+
+/* Foto com o mouse em cima: aproxima, clareia e mostra a legenda;
+   as outras da mesma faixa ficam mais apagadas */
+.galeria__foto:hover {
+  border-color: rgba(201, 169, 110, 0.55);
+}
+
+.galeria__foto:hover img {
+  transform: scale(1.08);
+  filter: brightness(1.02);
+}
+
+.galeria__foto:hover .galeria__legenda {
+  transform: translateY(0);
+}
+
+.galeria__faixa:hover .galeria__foto:not(:hover) {
+  opacity: 0.5;
+  filter: grayscale(0.4);
+}
+
+/* ---------- Fotos da grade bento: legenda ao passar o mouse ---------- */
+
+/* A camada de cartões não recebe o mouse (para não atrapalhar a rolagem),
+   mas as fotos da grade sim, quando a grade está visível. */
+.bento-grid.is-visible .bento-cell--image {
+  pointer-events: auto;
+}
+
+/* A foto só preenche o espaço do bloco (não estica a linha da grade) */
+.bento-cell--image img {
+  position: absolute;
+  inset: 0;
+  transition:
+    transform 1s var(--ease),
+    filter 0.6s var(--ease);
+}
+
+.bento-cell__legenda {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 1.6rem 0.85rem 0.7rem;
+  font-size: 0.68rem;
+  line-height: 1.4;
+  color: #fff;
+  background: linear-gradient(to top, rgba(8, 8, 9, 0.9), transparent);
+  transform: translateY(100%);
+  transition: transform 0.5s var(--ease);
+}
+
+.bento-cell--image:hover img {
+  transform: scale(1.1);
+  filter: saturate(1.35) brightness(1.05);
+}
+
+.bento-cell--image:hover .bento-cell__legenda {
+  transform: translateY(0);
+}
+
+/* ---------- Ficha: destaques trocam por capítulo; foto aproxima no mouse ---------- */
+
+/* O recipiente dos destaques "some" do layout: os 3 destaques continuam
+   ocupando a grade 2x2 junto com a foto, como antes. */
+.glass-stats__destaques {
+  display: contents;
+}
+
+/* Cada card da ficha: fundo escuro sólido (nada de vídeo vazando por trás),
+   borda dourada fina e um brilho dourado ao passar o mouse */
+.glass-stat,
+.scene--entrance .glass-stats--prominent .glass-stat {
+  position: relative;
+  border: 1px solid rgba(201, 169, 110, 0.3);
+  background: linear-gradient(160deg, rgba(24, 22, 26, 0.97), rgba(10, 10, 12, 0.97));
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+  transition:
+    transform 0.5s var(--ease),
+    border-color 0.5s var(--ease),
+    box-shadow 0.5s var(--ease);
+}
+
+.glass-stats.is-visible .glass-stat {
+  pointer-events: auto;
+}
+
+.glass-stat:hover {
+  transform: translateY(-4px);
+  border-color: rgba(201, 169, 110, 0.75);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.55), 0 0 28px rgba(201, 169, 110, 0.18);
+}
+
+/* Valor grande: branco com um leve dourado na parte de baixo */
+.glass-stat__value {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  background: linear-gradient(180deg, #ffffff 35%, #e6cf9f);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass-stat__label {
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: rgba(245, 245, 247, 0.6);
+  transition: color 0.4s var(--ease);
+}
+
+.glass-stat:hover .glass-stat__label {
+  color: var(--accent);
+}
+
+/* Nome acima da ficha (ex.: "Shelby GT500"), com a marca "A" dourada */
+.glass-stats__name {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.glass-stats__mark {
+  border-color: rgba(201, 169, 110, 0.6);
+  color: var(--accent);
+}
+
+/* Foto da ficha: ocupa o card inteiro, de ponta a ponta */
+.glass-stat--thumb,
+.scene--entrance .glass-stats--prominent .glass-stat--thumb {
+  padding: 0;
+  overflow: hidden;
+}
+
+.glass-stat--thumb img,
+.scene--entrance .glass-stats--prominent .glass-stat--thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+  transition: transform 1s var(--ease);
+}
+
+.glass-stat--thumb:hover img {
+  transform: scale(1.1);
+}
+
+/* ---------- Grade bento: blocos sem transparência ---------- */
+
+.bento-cell--warm {
+  background: #a83448;
+}
+
+.bento-cell--light {
+  background: #f6f3ef;
+}
+
+.bento-cell--dark {
+  background: #111014;
+}
+
+.bento-grid {
+  border: 1px solid rgba(201, 169, 110, 0.3);
+}
+
+.bento-cell--image img,
+.bento-cell.is-active.bento-cell--image img {
+  filter: none;
+}
+
+/* ---------- Card de serviço aceso (quando a pessoa chega por um botão) ---------- */
+
+.cartao-servico.cartao-servico--destacado {
+  transform: translateY(-8px);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(201, 169, 110, 0.55), 0 28px 70px rgba(201, 169, 110, 0.22);
+}
+
+.cartao-servico--destacado .cartao-servico__detalhe {
+  max-height: 10rem;
+  margin-top: 0.85rem;
+  opacity: 1;
+}
+
+.cartao-servico--destacado img {
+  transform: scale(1.06);
+}
+
+/* ---------- Logo oficial (topo e rodapé) ---------- */
+
+.logo {
+  display: block;
+  width: auto;
+  height: 1.9rem;
+}
+
+.logo--rodape {
+  height: 1.6rem;
+  opacity: 0.85;
+}
+
+/* ---------- Barra de serviços: botões que levam a cada serviço ---------- */
+
+/* A camada de cartões não recebe o mouse; a barra sim (são botões) */
+.service-dock {
+  pointer-events: auto;
+  gap: 0.55rem;
+}
+
+.service-dock__item {
+  width: auto;
+  height: 2.6rem;
+  padding: 0 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  font-family: inherit;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.82);
+  background: rgba(12, 12, 14, 0.85);
+  cursor: pointer;
+  transition:
+    color 0.3s var(--ease),
+    background 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    transform 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
+}
+
+.service-dock__item:hover,
+.service-dock__item:focus-visible {
+  color: #fff;
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4), 0 0 18px rgba(201, 169, 110, 0.25);
+  outline: none;
+}
+
+/* O serviço do capítulo atual fica dourado */
+.service-dock__item.is-active {
+  color: #111014;
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: none;
+  box-shadow: 0 0 22px rgba(201, 169, 110, 0.35);
+}
+
+.service-dock__item.is-active:hover {
+  transform: translateY(-3px);
+}
+
+/* ---------- Telas menores ---------- */
+
+@media (max-width: 1100px) {
+  .servicos__grade {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .historia {
+    grid-template-columns: 1fr;
+  }
+
+  .historia__numeros {
+    flex-direction: column;
+  }
+
+  .servicos__grade {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Quem pediu menos animação ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .cartao-foto img,
+  .cartao-servico,
+  .cartao-servico img,
+  .bento-cell--image img,
+  .glass-stat--thumb img {
+    transition: none;
+  }
+
+  .cartao-servico:hover,
+  .cartao-servico:focus-visible {
+    transform: none;
+  }
+
+  .cartao-servico__detalhe {
+    max-height: none;
+    margin-top: 0.85rem;
+    opacity: 1;
+  }
+
+  /* Galeria parada: a pessoa arrasta para o lado para ver as fotos */
+  .galeria__trilho {
+    animation: none;
+  }
+
+  .galeria__faixa {
+    overflow-x: auto;
+  }
+}

@@ -32,6 +32,7 @@
  *  - titulo: cada item da lista vira uma linha do título grande.
  *  - linhaEmDestaque: qual linha do título fica dourada (0 = primeira).
  *  - texto: frase abaixo do título.
+ *  - faseDoVideo (opcional): substitui a fase da cena só neste capítulo.
  *
  *  Para mudar um texto do site, basta editar aqui.
  * ============================================================
@@ -42,18 +43,21 @@ export const CENAS = {
   entrada: {
     idDoVideo: "video-entrada",
     seletor: ".scene--entrance",
-    distanciaDeRolagem: "+=180%",
-    faseDoVideo: 0.55,
+    distanciaDeRolagem: "+=260%",
+    faseDoVideo: 0.5,
     capitulos: [
       {
         id: "hero",
         inicioDoVideo: 0,
         fimDoVideo: 0.38,
-        peso: 1,
-        sobretitulo: "Customização premium",
+        peso: 0.85,
+        // Pausa curta: aqui não tem cartões, então o vídeo segue quase direto
+        // (uma pausa longa no hero parecia uma "travadinha").
+        faseDoVideo: 0.8,
+        sobretitulo: "Proteção e estética automotiva",
         titulo: ["L.A", "CUSTOM"],
         linhaEmDestaque: 1,
-        texto: "PPF, envelopamento, film e estética automotiva no mais alto padrão.",
+        texto: "Seu carro é a extensão de quem você é. Há mais de 17 anos, cuidamos dele como se fosse o nosso.",
       },
       {
         id: "destaque",
@@ -63,7 +67,7 @@ export const CENAS = {
         sobretitulo: "Projeto em destaque",
         titulo: ["SHELBY", "GT500"],
         linhaEmDestaque: 0,
-        texto: "Acabamento premium, proteção e personalização em veículos de alto padrão.",
+        texto: "Proteção invisível. Presença impossível de ignorar.",
       },
     ],
   },
@@ -72,8 +76,8 @@ export const CENAS = {
   boxes: {
     idDoVideo: "video-boxes",
     seletor: ".scene--boxes",
-    distanciaDeRolagem: "+=200%",
-    faseDoVideo: 0.52,
+    distanciaDeRolagem: "+=290%",
+    faseDoVideo: 0.48,
     capitulos: [
       {
         id: "boxes-intro",
@@ -83,7 +87,7 @@ export const CENAS = {
         sobretitulo: "Nossa estrutura",
         titulo: ["BOXES", "PREMIUM"],
         linhaEmDestaque: 1,
-        texto: "Iluminação profissional e espaço dedicado para cada tipo de serviço.",
+        texto: "Ambientes dedicados, luz técnica e controle total. O lugar certo para o carro que você não entrega a qualquer um.",
       },
       {
         id: "ppf",
@@ -93,7 +97,7 @@ export const CENAS = {
         sobretitulo: "Serviço 01",
         titulo: ["PPF", "PROTEÇÃO"],
         linhaEmDestaque: 0,
-        texto: "Película de proteção de pintura contra riscos, pedras e agentes externos.",
+        texto: "Uma película invisível que encara pedrisco, risco e sol no lugar da sua pintura. E ainda faz a água escorrer.",
       },
       {
         id: "envelopamento",
@@ -103,7 +107,7 @@ export const CENAS = {
         sobretitulo: "Serviço 02",
         titulo: ["ENVELOPA", "MENTO"],
         linhaEmDestaque: 1,
-        texto: "Personalização total com vinil de alta performance e acabamento impecável.",
+        texto: "Nova cor, novo acabamento, nova personalidade. Sem tocar na pintura original, e dá para voltar atrás quando quiser.",
       },
     ],
   },
@@ -113,8 +117,8 @@ export const CENAS = {
     idDoVideo: "video-lavagem",
     seletor: ".scene--wash",
     modo: "loop",
-    distanciaDeRolagem: "+=120%",
-    faseDoVideo: 0.55,
+    distanciaDeRolagem: "+=170%",
+    faseDoVideo: 0.45,
     capitulos: [
       {
         id: "processo",
@@ -124,7 +128,7 @@ export const CENAS = {
         sobretitulo: "Padrão L.A Custom",
         titulo: ["PRECISÃO", "EM CADA", "DETALHE"],
         linhaEmDestaque: 1,
-        texto: "Equipe especializada, iluminação profissional e excelência em cada entrega.",
+        texto: "Lavagem técnica, produtos de primeira linha e uma equipe que conhece o seu carro pelo nome.",
       },
     ],
   },
@@ -133,8 +137,8 @@ export const CENAS = {
   detalhamento: {
     idDoVideo: "video-detalhamento",
     seletor: ".scene--detail",
-    distanciaDeRolagem: "+=110%",
-    faseDoVideo: 0.55,
+    distanciaDeRolagem: "+=160%",
+    faseDoVideo: 0.45,
     capitulos: [
       {
         id: "detalhamento",
@@ -144,7 +148,7 @@ export const CENAS = {
         sobretitulo: "Serviço 03",
         titulo: ["CORREÇÃO", "DE PINTURA"],
         linhaEmDestaque: 0,
-        texto: "Polimento técnico e vitrificação para acabamento espelhado e proteção duradoura.",
+        texto: "Polimento técnico que apaga marcas e devolve o brilho de fábrica. Com o coating cerâmico, ele fica assim por muito mais tempo.",
       },
     ],
   },

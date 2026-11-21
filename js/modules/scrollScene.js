@@ -41,7 +41,7 @@ export function iniciarCena(cena, opcoes) {
 
   const videoEmLoop = cena.modo === "loop";
 
-  colocarCartoesNaCena(secao, opcoes.temGradeBento);
+  colocarCartoesNaCena(secao, opcoes.temGradeBento, cena.capitulos);
   const paineis = colocarPaineisNaCena(secao, cena.capitulos);
   const atualizarTransicoes = criarTransicoesDaCena(secao);
 

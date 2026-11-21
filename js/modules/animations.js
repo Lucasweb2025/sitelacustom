@@ -18,6 +18,7 @@
 import { CARTOES } from "../content/cards.js";
 import { converterFaixa, limitarEntreZeroEUm } from "./math.js";
 import { reduzirMovimento } from "./environment.js";
+import { montarDestaqueDaFicha } from "./templates.js";
 
 /**
  * Faz o bloco de texto de um capítulo aparecer aos poucos:
@@ -91,13 +92,21 @@ export function criarTransicoesDaCena(secao) {
 }
 
 /**
- * Mostra ou esconde a grade bento. Os blocos sobem um depois do outro,
- * e a linha em destaque fica mais forte que as outras.
+ * Mostra a grade bento do capítulo atual e esconde as dos outros capítulos
+ * (cada capítulo da cena dos boxes tem a sua grade, com conteúdo próprio).
  */
-function atualizarGradeBento(camadaDeCartoes, mostrar, revelacao, linhaEmDestaque) {
-  const grade = camadaDeCartoes.querySelector(".bento-grid");
-  if (!grade) return;
+function atualizarGradesBento(camadaDeCartoes, idDoCapitulo, mostrar, revelacao) {
+  camadaDeCartoes.querySelectorAll(".bento-grid").forEach((grade) => {
+    const ehDoCapitulo = grade.dataset.capitulo === idDoCapitulo;
+    atualizarGradeBento(grade, mostrar && ehDoCapitulo, revelacao);
+  });
+}
 
+/**
+ * Mostra ou esconde uma grade bento. Os blocos sobem um depois do outro,
+ * já 100% visíveis (sem transparência), como pedido.
+ */
+function atualizarGradeBento(grade, mostrar, revelacao) {
   const blocos = [...grade.querySelectorAll(".bento-cell")];
   const revelacaoDaGrade = mostrar ? converterFaixa(revelacao, 0.25, 1, 0, 1) : 0;
   const centralizarNaAltura = -50; // a grade fica centralizada na altura da tela
@@ -122,32 +131,43 @@ function atualizarGradeBento(camadaDeCartoes, mostrar, revelacao, linhaEmDestaqu
   });
 
   blocos.forEach((bloco, indice) => {
-    const linhaDoBloco = Math.floor(indice / 2); // 2 blocos por linha
-    const atraso = indice * 0.07;
+    const atraso = indice * 0.07; // cada bloco entra um pouquinho depois do anterior
     const revelacaoDoBloco = limitarEntreZeroEUm(
       (revelacaoDaGrade - atraso) / Math.max(0.01, 1 - atraso)
     );
-    const emDestaque = linhaEmDestaque === undefined || linhaDoBloco === linhaEmDestaque;
 
-    bloco.classList.toggle("is-active", emDestaque && revelacaoDoBloco > 0.5);
+    bloco.classList.toggle("is-active", revelacaoDoBloco > 0.5);
     gsap.set(bloco, {
-      opacity: revelacaoDoBloco * (emDestaque ? 1 : 0.55),
+      opacity: revelacaoDoBloco,
       y: converterFaixa(revelacaoDoBloco, 0, 1, 64, 0),
     });
   });
 }
 
-/** Troca o nome e a foto da ficha do carro conforme o capítulo. */
+/**
+ * Troca o título, a foto e os destaques da ficha conforme o capítulo.
+ * Só mexe na página quando algo realmente mudou (evita trabalho a cada rolagem).
+ */
 function atualizarConteudoDaFicha(camadaDeCartoes, regras) {
-  const nome = camadaDeCartoes.querySelector(".glass-stats__name");
+  const titulo = camadaDeCartoes.querySelector(".glass-stats__name");
   const foto = camadaDeCartoes.querySelector(".glass-stat--thumb img");
+  const areaDosDestaques = camadaDeCartoes.querySelector(".glass-stats__destaques");
 
-  if (nome && regras.nomeDoVeiculo) {
-    nome.textContent = regras.nomeDoVeiculo;
+  if (titulo && regras.titulo && titulo.textContent !== regras.titulo) {
+    titulo.textContent = regras.titulo;
   }
+
   if (foto) {
-    const novaFoto = regras.foto || CARTOES.fichaDoCarro.foto;
+    const novaFoto = regras.foto || CARTOES.ficha.foto;
     if (foto.getAttribute("src") !== novaFoto) foto.setAttribute("src", novaFoto);
+  }
+
+  if (areaDosDestaques && regras.destaques) {
+    const chaveDosDestaques = regras.destaques.map((d) => d.valor).join("|");
+    if (areaDosDestaques.dataset.atual !== chaveDosDestaques) {
+      areaDosDestaques.innerHTML = regras.destaques.map(montarDestaqueDaFicha).join("");
+      areaDosDestaques.dataset.atual = chaveDosDestaques;
+    }
   }
 }
 
@@ -166,11 +186,13 @@ function atualizarVisibilidadeDaFicha(ficha, mostrar, grande, revelacao) {
   });
 }
 
-/** Acende a bolinha do serviço do capítulo atual na barra de serviços. */
-function atualizarBarraDeServicos(camadaDeCartoes, servicoAceso, revelacao) {
-  camadaDeCartoes.querySelectorAll(".service-dock__item").forEach((bolinha, indice) => {
-    bolinha.classList.toggle("is-active", indice === servicoAceso);
-    gsap.set(bolinha, { opacity: converterFaixa(revelacao, 0.2, 0.8, 0.4, 1) });
+/** Acende o botão do serviço do capítulo atual na barra de serviços. */
+function atualizarBarraDeServicos(camadaDeCartoes, servicoAceso) {
+  camadaDeCartoes.querySelectorAll(".service-dock__item").forEach((botao, indice) => {
+    const aceso = indice === servicoAceso;
+    botao.classList.toggle("is-active", aceso);
+    if (aceso) botao.setAttribute("aria-current", "true");
+    else botao.removeAttribute("aria-current");
   });
 }
 
@@ -195,8 +217,8 @@ export function atualizarCartoesDaCena(secao, idDoCapitulo, revelacao, emPausa) 
     atualizarVisibilidadeDaFicha(ficha, mostrarFicha, Boolean(regras.fichaGrande), revelacaoDaFicha);
   }
 
-  atualizarGradeBento(camadaDeCartoes, mostrarBento, revelacao, regras.linhaDoBento);
-  atualizarBarraDeServicos(camadaDeCartoes, regras.servicoAceso, revelacao);
+  atualizarGradesBento(camadaDeCartoes, idDoCapitulo, mostrarBento, revelacao);
+  atualizarBarraDeServicos(camadaDeCartoes, regras.servicoAceso);
 }
 
 /** O aviso "Role para entrar" some assim que a pessoa começa a rolar. */
@@ -213,17 +235,46 @@ export function iniciarAvisoDeRolagem() {
   });
 }
 
-/** O bloco "Agende seu orçamento" aparece subindo quando chega na tela. */
-export function iniciarEntradaDoOrcamento() {
-  const secao = document.querySelector(".cta-section");
+/**
+ * Deixa uma seção "presa" na tela por um trecho da rolagem, para a pessoa
+ * ter tempo de ver os cards (e passar o mouse neles) antes de seguir.
+ *
+ * - seletor: qual seção prender (ex.: "#servicos")
+ * - distancia: por quanto tempo de rolagem ela fica presa ("+=60%" = 60% da altura da tela)
+ *
+ * A seção prende quando o fim dela encosta no fim da tela, ou seja, quando
+ * ela já está inteira visível (ou, se for maior que a tela, quando os cards
+ * do fim dela estão na tela).
+ */
+export function travarSecaoNaTela(seletor, distancia) {
+  const secao = document.querySelector(seletor);
   if (!secao) return;
 
-  gsap.from(secao.querySelectorAll(".cta-section__inner > *"), {
-    opacity: 0,
-    y: 28,
-    duration: 0.9,
-    stagger: 0.12, // cada item entra 0,12s depois do anterior
-    ease: "power3.out",
-    scrollTrigger: { trigger: secao, start: "top 78%" },
+  ScrollTrigger.create({
+    trigger: secao,
+    start: "bottom bottom",
+    end: distancia,
+    pin: true,
+  });
+}
+
+/**
+ * Faz os elementos marcados com data-revelar (no index.html) aparecerem
+ * subindo quando chegam na tela: a história, os cards de serviço, a frase
+ * entre as cenas e o bloco de orçamento.
+ * Elementos dentro do mesmo grupo entram um depois do outro.
+ */
+export function iniciarRevelacaoDasSecoes() {
+  if (reduzirMovimento) return; // sem animação: tudo já aparece normal
+
+  document.querySelectorAll("[data-revelar-grupo]").forEach((grupo) => {
+    gsap.from(grupo.querySelectorAll("[data-revelar]"), {
+      opacity: 0,
+      y: 36,
+      duration: 0.9,
+      stagger: 0.12, // cada item entra 0,12s depois do anterior
+      ease: "power3.out",
+      scrollTrigger: { trigger: grupo, start: "top 78%" },
+    });
   });
 }

@@ -45,11 +45,13 @@ export function converterFaixa(valor, entradaMinima, entradaMaxima, saidaMinima,
  * - revelacaoDoTexto: quanto do texto já apareceu (0 = escondido, 1 = inteiro)
  * - emPausa: true quando o vídeo já parou e é a vez do texto
  */
-export function calcularEstadoDoCapitulo(progressoDaCena, capitulos, faseDoVideo) {
+export function calcularEstadoDoCapitulo(progressoDaCena, capitulos, faseDaCena) {
   const pesoTotal = capitulos.reduce((soma, capitulo) => soma + capitulo.peso, 0);
   let inicioDoCapitulo = 0;
 
   for (let indice = 0; indice < capitulos.length; indice++) {
+    // Um capítulo pode ter a sua própria fase (ex.: o hero, com pausa mais curta)
+    const faseDoVideo = capitulos[indice].faseDoVideo ?? faseDaCena;
     const tamanhoDoCapitulo = capitulos[indice].peso / pesoTotal;
     const fimDoCapitulo = inicioDoCapitulo + tamanhoDoCapitulo;
     const ehUltimo = indice === capitulos.length - 1;
@@ -87,6 +89,26 @@ export function calcularEstadoDoCapitulo(progressoDaCena, capitulos, faseDoVideo
     revelacaoDoTexto: 1,
     emPausa: true,
   };
+}
+
+/**
+ * Diz em que ponto da cena (0 a 1) um capítulo está com o texto e os
+ * cartões totalmente na tela: o meio da pausa daquele capítulo.
+ * Usado pelos botões da barra de serviços, para levar a pessoa direto lá.
+ * Ex.: 2 capítulos iguais, fase 0,5 → o 1º fica pronto em 0,375 (metade
+ * da pausa dele, que vai de 0,25 a 0,5).
+ */
+export function calcularProgressoParaVerCapitulo(capitulos, indiceDoCapitulo, faseDaCena) {
+  const pesoTotal = capitulos.reduce((soma, capitulo) => soma + capitulo.peso, 0);
+  const inicio = capitulos
+    .slice(0, indiceDoCapitulo)
+    .reduce((soma, capitulo) => soma + capitulo.peso / pesoTotal, 0);
+  const capitulo = capitulos[indiceDoCapitulo];
+  const tamanho = capitulo.peso / pesoTotal;
+  const faseDoVideo = capitulo.faseDoVideo ?? faseDaCena;
+
+  // meio da pausa: depois do vídeo andar, metade do tempo de pausa
+  return inicio + tamanho * (faseDoVideo + (1 - faseDoVideo) / 2);
 }
 
 /**

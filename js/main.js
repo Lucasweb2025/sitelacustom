@@ -17,7 +17,14 @@ import { reduzirMovimento, ehComputador } from "./modules/environment.js";
 import { baixarVideosAoSeAproximar } from "./modules/videos.js";
 import { iniciarCena } from "./modules/scrollScene.js";
 import { iniciarMenuDoTopo } from "./modules/header.js";
-import { iniciarAvisoDeRolagem, iniciarEntradaDoOrcamento } from "./modules/animations.js";
+import { iniciarGaleria } from "./modules/gallery.js";
+import { iniciarFaixasDeLogo } from "./modules/marquee.js";
+import { ligarBotoesDeServico, suavizarLinksDoMenu } from "./modules/navigation.js";
+import {
+  iniciarAvisoDeRolagem,
+  iniciarRevelacaoDasSecoes,
+  travarSecaoNaTela,
+} from "./modules/animations.js";
 
 /*
  * AJUSTES DE SUAVIDADE (dá para mexer aqui)
@@ -29,12 +36,16 @@ import { iniciarAvisoDeRolagem, iniciarEntradaDoOrcamento } from "./modules/anim
  *   Deixa o movimento do vídeo macio. 0 = vídeo grudado na rolagem.
  * - menorMudancaDoVideo: o vídeo só muda de quadro se a diferença for
  *   maior que isso (1/48s = meio quadro de um vídeo de 24 quadros/s).
+ * - tempoComOsServicosNaTela: quanto a pessoa rola com os cards de serviço
+ *   parados na tela ("+=60%" = 60% da altura da tela). Para os cards que
+ *   aparecem por cima dos vídeos, ajuste em js/content/scenes.js.
  */
 const AJUSTES = {
   inerciaDaRolagem: 0.075,
   velocidadeDaRoda: 0.9,
   atrasoDoVideo: 0.6,
   menorMudancaDoVideo: 1 / 48,
+  tempoComOsServicosNaTela: "+=60%",
 };
 
 /**
@@ -63,6 +74,11 @@ function iniciarSite() {
 
   if (!reduzirMovimento) ligarRolagemSuave();
 
+  // A galeria é montada antes de tudo, porque ela muda a altura da página
+  iniciarGaleria();
+  iniciarFaixasDeLogo();
+  ligarBotoesDeServico();
+  suavizarLinksDoMenu();
   baixarVideosAoSeAproximar();
   iniciarAvisoDeRolagem();
 
@@ -71,15 +87,18 @@ function iniciarSite() {
     diferencaMinima: AJUSTES.menorMudancaDoVideo,
   };
 
+  // As partes que ficam "presas" na tela são criadas na ordem em que aparecem
+  // na página: cada uma empurra as de baixo, então a ordem importa.
   iniciarCena(CENAS.entrada, opcoesDasCenas);
   iniciarCena(CENAS.boxes, { ...opcoesDasCenas, temGradeBento: true });
+  travarSecaoNaTela("#servicos", AJUSTES.tempoComOsServicosNaTela);
   iniciarCena(CENAS.lavagem, opcoesDasCenas);
   iniciarCena(CENAS.detalhamento, opcoesDasCenas);
 
-  // O menu e o bloco de orçamento vêm DEPOIS das cenas: as cenas "presas" na tela
-  // aumentam o tamanho da página, e quem é criado depois já calcula as posições certas.
+  // O menu e as animações de entrada vêm DEPOIS: as partes presas aumentam o
+  // tamanho da página, e quem é criado depois já calcula as posições certas.
   iniciarMenuDoTopo();
-  iniciarEntradaDoOrcamento();
+  iniciarRevelacaoDasSecoes();
   ScrollTrigger.refresh(); // recalcula as posições depois de montar tudo
 }
 
